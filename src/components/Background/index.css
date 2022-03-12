@@ -1,0 +1,55 @@
+.background {
+  width: 500px;
+  height: 300px;
+  margin: auto;
+  margin-top: 90px;
+  position: relative;
+  margin-bottom: 100px;
+}
+
+.resize-handle-left {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  background-color: #ffffff;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  transform: translate(-50%, -50%);
+  cursor: col-resize;
+  transition-duration: 300ms;
+}
+
+.resize-handle-right {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  background-color: #ffffff;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  transform: translate(50%, -50%);
+  cursor: col-resize;
+  transition-duration: 300ms;
+}
+
+.resize-handle-bottom {
+  position: absolute;
+  left: 50%;
+  bottom: 0;
+  background-color: #ffffff;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  transform: translate(-50%, 50%);
+  cursor: row-resize;
+  transition-duration: 300ms;
+
+}
+
+.resize-handle-left:hover,
+.resize-handle-right:hover,
+.resize-handle-bottom:hover {
+  width: 15px;
+  height: 15px;
+}

@@ -1,0 +1,23 @@
+.button {
+  height: 31px;
+  padding: 0 15px;
+  border: none;
+  font-size: 0.8em;
+  margin-left: 15px;
+  border-radius: 3px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 94px;
+}
+
+.button.record {
+  color: #FF4848;
+  background-color: #FFD0D9;
+}
+
+.button.export {
+  color: #017A2A;
+  background-color: #D0FFDA;
+}

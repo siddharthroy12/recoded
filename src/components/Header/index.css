@@ -1,10 +1,9 @@
 .header {
   display: flex;
-  height: 50px;
   align-items: center;
   justify-content: space-between;
   background-color: var(--header-background);
-  padding: 0 20px;
+  padding: 10px 20px;
   margin: 20px;
   border-radius: 5px;
 }
@@ -12,6 +11,7 @@
 .header__part {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .app-logo {
@@ -29,8 +29,10 @@
 
 .input-label {
   color: var(--option-name);
+  margin-top: 15px;
+  margin-bottom: 15px;
   margin-right: 10px;
-  margin-left: 30px;
+  margin-left: 20px;
   font-size: 0.9em;
 }
 
