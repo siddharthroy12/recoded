@@ -1,0 +1,22 @@
+.background-color-1 {
+  background: linear-gradient(90deg, #EC3C3C 0%, #EC3CDA 100%);
+}
+
+.background-color-2 {
+  background: linear-gradient(90deg, #2DE14A 0%, #35E4E4 100%);
+}
+
+.background-color-3 {
+  background: linear-gradient(90deg, #E1DA2D 0%, #E4359E 100%);
+}
+
+.background-color-4 {
+  background: linear-gradient(90deg, #2D3FE1 0%, #E4359E 100%);
+}
+
+.circle {
+  width: 15px;
+  height: 15px;
+  border-radius: 50px;
+}
+

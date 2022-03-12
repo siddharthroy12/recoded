@@ -1,0 +1,27 @@
+.options {
+  position: absolute;
+  right: 0;
+  top: 31px;
+  background-color: var(--header-background);
+  border: 1px solid var(--option-box-border);
+  width: 90px;
+  padding: 0 10px;
+  font-size: 0.8em;
+  color: var(--input-value);
+  padding-bottom: 10px;
+}
+
+.option {
+  padding-top: 10px;
+  cursor: pointer;
+}
+
+.option:hover {
+  color: #000000;
+}
+
+.select-input {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
