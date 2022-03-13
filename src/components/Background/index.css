@@ -1,10 +1,8 @@
 .background {
   width: 500px;
   height: 300px;
-  margin: auto;
-  margin-top: 90px;
   position: relative;
-  margin-bottom: 100px;
+  box-sizing: border-box;
 }
 
 .resize-handle-left {
@@ -18,6 +16,7 @@
   transform: translate(-50%, -50%);
   cursor: col-resize;
   transition-duration: 300ms;
+  z-index: 10;
 }
 
 .resize-handle-right {
@@ -31,6 +30,7 @@
   transform: translate(50%, -50%);
   cursor: col-resize;
   transition-duration: 300ms;
+  z-index: 10;
 }
 
 .resize-handle-bottom {
@@ -44,7 +44,7 @@
   transform: translate(-50%, 50%);
   cursor: row-resize;
   transition-duration: 300ms;
-
+  z-index: 10;
 }
 
 .resize-handle-left:hover,

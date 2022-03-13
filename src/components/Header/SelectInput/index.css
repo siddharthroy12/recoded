@@ -1,7 +1,8 @@
 .options {
   position: absolute;
-  right: 0;
-  top: 31px;
+  top: 56px;
+  max-height: 250px;
+  overflow-y: auto;
   background-color: var(--header-background);
   border: 1px solid var(--option-box-border);
   width: 90px;
@@ -9,6 +10,9 @@
   font-size: 0.8em;
   color: var(--input-value);
   padding-bottom: 10px;
+  z-index: 999;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
 }
 
 .option {
@@ -22,6 +26,7 @@
 
 .select-input {
   display: flex;
-  align-items: center;
+  flex-direction: column;
   position: relative;
+  margin-right: 20px;
 }

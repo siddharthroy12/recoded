@@ -1,16 +1,23 @@
-.header {
+.header-container {
   display: flex;
-  align-items: center;
+  justify-content: center;
+}
+.header {
+  display: inline-flex;
+  align-items: flex-end;
   justify-content: space-between;
   background-color: var(--header-background);
-  padding: 10px 20px;
-  margin: 20px;
+  padding: 20px 25px;
+  margin: auto;
+  margin-top: 20px;
   border-radius: 5px;
 }
 
 .header__part {
   display: flex;
-  align-items: center;
+  justify-content: flex-end;
+  align-items: flex-end;
+  height: 100%;
   flex-wrap: wrap;
 }
 
@@ -29,11 +36,8 @@
 
 .input-label {
   color: var(--option-name);
-  margin-top: 15px;
-  margin-bottom: 15px;
-  margin-right: 10px;
-  margin-left: 20px;
-  font-size: 0.9em;
+  margin-bottom: 10px;
+  font-size: 0.8em;
 }
 
 .input-box {

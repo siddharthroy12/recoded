@@ -1,94 +1,130 @@
-import { useEffect, useRef } from 'react';
-
+import { useEffect, useRef, forwardRef } from 'react';
+import Window from './Window';
 import './index.css';
 
-export default function Background({ backgroundColor }) {
-  const backgroundRef = useRef(null);
+const MAX_WIDTH = 1000;
+const MIN_WIDTH = 400;
+const MIN_HEIGHT = 300;
+
+export default forwardRef(( props, ref ) => {
+  const {
+    backgroundColor,
+    padding,
+    borderRadius,
+    fontSize,
+    colors,
+    language,
+    exporting,
+    text,
+    setText
+  } = props;
+
+  const backgroundRef = ref;
+  /* const backgroundRef = useRef(null); */
   const handleRightRef = useRef(null);
   const handleLeftRef = useRef(null);
   const handleBottomRef = useRef(null);
 
   useEffect(() => {
-    handleRightRef.current.addEventListener('mousedown', initResizeRight, false);
-    handleLeftRef.current.addEventListener('mousedown', initResizeLeft, false);
-    handleBottomRef.current.addEventListener('mousedown', initResizeBottom, false);
+    const backgroundEl = backgroundRef.current;
+    const handleRightEl = handleRightRef.current;
+    const handleLeftEl = handleLeftRef.current;
+    const handleBottomEl = handleBottomRef.current;
+
+    // I cannot avoid duplicate functions here
+    function initResizeRight() {
+      window.addEventListener('mousemove', resizeRight, false);
+      window.addEventListener('mouseup', stopResizeRight, false);
+    }
+
+    function resizeRight(e) {
+      e.preventDefault();
+
+      backgroundEl.style.width = (e.clientX - backgroundEl.offsetLeft) + 'px';
+
+      if (+(backgroundEl.style.width.replace('px', '')) < MIN_WIDTH) {
+        backgroundEl.style.width = MIN_WIDTH + 'px';
+      }
+      if (+(backgroundEl.style.width.replace('px', '')) > MAX_WIDTH) {
+        backgroundEl.style.width = MAX_WIDTH + 'px';
+      }
+    }
+
+    function stopResizeRight() {
+      window.removeEventListener('mousemove', resizeRight, false);
+      window.removeEventListener('mouseup', stopResizeRight, false);
+    }
+
+    function initResizeLeft() {
+      window.addEventListener('mousemove', resizeLeft, false);
+      window.addEventListener('mouseup', stopResizeLeft, false);
+    }
+
+    function resizeLeft(e) {
+      e.preventDefault();
+      backgroundEl.style.width = ((window.innerWidth - e.clientX)  - backgroundEl.offsetLeft) + 'px';
+
+      if (+(backgroundEl.style.width.replace('px', '')) < MIN_WIDTH) {
+        backgroundEl.style.width = MIN_WIDTH + 'px';
+      }
+      if (+(backgroundEl.style.width.replace('px', '')) > MAX_WIDTH) {
+        backgroundEl.style.width = MAX_WIDTH + 'px';
+      }
+    }
+
+    function stopResizeLeft() {
+      window.removeEventListener('mousemove', resizeLeft, false);
+      window.removeEventListener('mouseup', stopResizeLeft, false);
+    }
+
+    function initResizeBottom() {
+      window.addEventListener('mousemove', resizeBottom, false);
+      window.addEventListener('mouseup', stopResizeBottom, false);
+      }
+
+    function resizeBottom(e) {
+      e.preventDefault();
+      backgroundEl.style.height = ((e.clientY + window.scrollY) - backgroundEl.offsetTop) + 'px';
+      if (+(backgroundEl.style.height.replace('px', '')) < MIN_HEIGHT) {
+        backgroundEl.style.height = MIN_HEIGHT + 'px';
+      }
+
+    }
+
+    function stopResizeBottom() {
+      window.removeEventListener('mousemove', resizeBottom, false);
+      window.removeEventListener('mouseup', stopResizeBottom, false);
+    }
+
+    handleRightEl.addEventListener('mousedown', initResizeRight, false);
+    handleLeftEl.addEventListener('mousedown', initResizeLeft, false);
+    handleBottomEl.addEventListener('mousedown', initResizeBottom, false);
 
     return () => {
-      handleRightRef.current.removeEventListener('mousedown', initResizeRight, false);
-      handleLeftRef.current.removeEventListener('mousedown', initResizeLeft, false);
-      handleBottomRef.current.removeEventListener('mousedown', initResizeBottom, false);
+      handleRightEl.removeEventListener('mousedown', initResizeRight, false);
+      handleLeftEl.removeEventListener('mousedown', initResizeLeft, false);
+      handleBottomEl.removeEventListener('mousedown', initResizeBottom, false);
     }
-  },[ initResizeRight, initResizeLeft, initResizeBottom]);
+  },[]);
 
-  // I cannot avoid duplicate functions here
-  function initResizeRight() {
-    window.addEventListener('mousemove', resizeRight, false);
-    window.addEventListener('mouseup', stopResizeRight, false);
-  }
-
-  function resizeRight(e) {
-    const element = backgroundRef.current;
-    element.style.width = (e.clientX - element.offsetLeft) + 'px';
-
-    if (+(element.style.width.replace('px', '')) < 400) {
-      element.style.width = '400px';
-    }
-    if (+(element.style.width.replace('px', '')) > 800) {
-      element.style.width = '800px';
-    }
-  }
-
-  function stopResizeRight() {
-    window.removeEventListener('mousemove', resizeRight, false);
-    window.removeEventListener('mouseup', stopResizeRight, false);
-  }
-
-  function initResizeLeft() {
-    window.addEventListener('mousemove', resizeLeft, false);
-    window.addEventListener('mouseup', stopResizeLeft, false);
-  }
-
-  function resizeLeft(e) {
-    const element = backgroundRef.current;
-    element.style.width = ((window.innerWidth - e.clientX)  - element.offsetLeft) + 'px';
-
-    if (+(element.style.width.replace('px', '')) < 400) {
-      element.style.width = '400px';
-    }
-    if (+(element.style.width.replace('px', '')) > 800) {
-      element.style.width = '800px';
-    }
-  }
-
-  function stopResizeLeft() {
-    window.removeEventListener('mousemove', resizeLeft, false);
-    window.removeEventListener('mouseup', stopResizeLeft, false);
-  }
-
-  function initResizeBottom() {
-    window.addEventListener('mousemove', resizeBottom, false);
-    window.addEventListener('mouseup', stopResizeBottom, false);
-  }
-
-  function resizeBottom(e) {
-    const element = backgroundRef.current;
-    element.style.height = ((e.clientY + window.scrollY) - element.offsetTop) + 'px';
-    if (+(element.style.height.replace('px', '')) < 300) {
-      element.style.height = '300px';
-    }
-
-  }
-
-  function stopResizeBottom() {
-    window.removeEventListener('mousemove', resizeBottom, false);
-    window.removeEventListener('mouseup', stopResizeBottom, false);
-  }
 
   return (
-    <div className={`background background-color-${backgroundColor}`} ref={backgroundRef}>
-      <div className="resize-handle-left" ref={handleLeftRef} />
-      <div className="resize-handle-right" ref={handleRightRef}/>
-      <div className="resize-handle-bottom" ref={handleBottomRef}/>
+    <div
+      className={`background background-color-${backgroundColor}`}
+      ref={backgroundRef}
+      style={{ padding: padding+'px' }}>
+      <div className="resize-handle-left" ref={handleLeftRef} style={{ display: !exporting ? 'block' : 'none' }} />
+      <div className="resize-handle-right" ref={handleRightRef} style={{ display: !exporting ? 'block' : 'none' }} />
+      <div className="resize-handle-bottom" ref={handleBottomRef} style={{ display: !exporting ? 'block' : 'none' }} />
+      <Window
+        borderRadius={borderRadius}
+        fontSize={fontSize}
+        colors={colors}
+        language={language}
+        exporting={exporting}
+        text={text}
+        setText={setText}
+      />
     </div>
   );
-}
+})

@@ -1,6 +1,6 @@
 export default function NumberInput({ name, value, onChange }) {
   return (
-    <>
+    <div className="select-input">
       <label htmlFor={name} className="input-label">{name}</label>
       <input
         type="number"
@@ -10,6 +10,6 @@ export default function NumberInput({ name, value, onChange }) {
         className="input-box"
         onChange={e => onChange(e.target.value)}
       />
-    </>
+    </div>
   );
 }

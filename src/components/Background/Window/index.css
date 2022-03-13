@@ -1,0 +1,60 @@
+.window {
+  height: 100%;
+  width: 100%;
+  background-color: #252525;
+  overflow: hidden;
+}
+
+.title-bar {
+  height: 35px;
+  background-color: #141414;
+  position: relative;
+}
+
+.title-text {
+  color: white;
+  position: absolute;
+  left: 50%;
+  top: 0;
+  transform: translateX(-50%);
+  margin: 10px 0;
+  font-size: 0.9em;
+  min-width: 10px;
+}
+
+.title-buttons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  left: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+}
+
+.title-button {
+  background-color: white;
+  width: 10px;
+  height: 10px;
+  border-radius: 50px;
+  margin: 0 5px;
+}
+
+.title-button:nth-child(3) {
+  background-color: #0EF85E;
+}
+
+.title-button:nth-child(1) {
+  background-color: #F80E54;
+}
+
+.title-button:nth-child(2) {
+  background-color: #FFE146;
+}
+
+.ace_editor {
+  font-family: 'Fira Code', monospace !important;
+}
+.ace_hidden-cursors {
+  opacity: 0;
+}
