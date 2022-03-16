@@ -1,3 +1,4 @@
+import { useRef, useEffect } from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/mode-java";
@@ -69,7 +70,14 @@ export const LANGUAGE = {
 
 export default function Window({ borderRadius, fontSize,
                                  colors, language, exporting,
-                                 text, setText }) {
+                                 editorState, setEditorState }) {
+  const editorRef = useRef(null);
+
+  useEffect(() => {
+    editorRef.current.editor.moveCursorTo(editorState.row, editorState.column);
+  }, [editorState]);
+
+
   return (
     <div className="window" style={{ borderRadius: borderRadius + 'px' }}>
       <div className="title-bar">
@@ -83,17 +91,24 @@ export default function Window({ borderRadius, fontSize,
         </p>
       </div>
       <AceEditor
+        ref={editorRef}
         mode={LANGUAGE[language]}
         theme={COLORS[colors]}
         width="100%"
         highlightActiveLine={!exporting}
         showPrintMargin={false}
-        value={text}
-        onChange={setText}
+        value={editorState.text}
+        onChange={(text, event) => {
+          setEditorState(prev => ({...prev, text }))
+          setEditorState(prev => ({...prev, row: event.end.row, column: event.end.column }));
+        }}
+        onCursorChange={(value) => {
+        }}
         fontSize={fontSize + 'px'}
-        /* I hope this doesn't have any effect on performance */
+        cursorStart={1}
         onLoad={element => {
           element.renderer.setScrollMargin(10, 10);
+          /* I hope this doesn't have any effect on performance */
           setInterval(() => element.resize(), 100);
         }}
         height="calc(100% - 35px)"

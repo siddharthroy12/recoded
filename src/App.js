@@ -1,9 +1,15 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Background from './components/Background';
 import domtoimage from 'dom-to-image';
-import useVideoCapture from "react-dom-to-video";
+import { createGIF } from 'gifshot';
 import './App.css';
+
+const SCALE = 3;
+
+function sleep(milliseconds) {
+  return new Promise((resolve) => setTimeout(() => resolve(), milliseconds));
+}
 
 function base64toBlobURL(base64ImageData) {
   const contentType = 'image/png';
@@ -38,59 +44,98 @@ function App() {
   const [fontSize, setFontSize] = useState(16);
   const [exporting, setExporting] = useState(false);
   const [recording, setRecording] = useState(false);
-  const [text, setText] = useState('adsa');
+  const [exportingGIF, setExportingGIF] = useState(false);
+  const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
+  const [frames, setFrames] = useState([]);
+  const [gifFrames, setGIFFrames] = useState([]);
+  const [editorState, setEditorState] = useState({ text: '', row: 0, column: 0 });
+  const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
 
-  const { startWatching, stopWatching, generateVideo, exportVideo } =
-    useVideoCapture(
-        backgroundRef.current, // node
-        text, // trigger
-    );
+  useEffect(() => {
+    if (recording) {
+      setFrames(prev => [...prev, { ...editorState }]);
+    }
+  }, [recording, editorState]);
 
-  const onExport = () => {
-    setExporting(true);
+  useEffect(() => {
+    if (exportingGIF) {
+      setEditorState(frames[currentFrameToCapture])
+      setCurrentFrameToCapture(prev => prev+1);
+      takeSnapshot()
+        .then(imageBlob => setGIFFrames(prev => [...prev, imageBlob]));
+      if (currentFrameToCapture === (frames.length - 1)) {
+        setExportingGIF(false);
+        setAllGIFFramesCaptured(true);
+        setCurrentFrameToCapture(0);
+      }
+    }
+  }, [exportingGIF, currentFrameToCapture, frames]);
 
-    setTimeout(() => {
+  useEffect(() => {
+    if (allGIFFramesCaptured && (gifFrames.length === frames.length)) {
+      const width = backgroundRef.current.offsetWidth * SCALE;
+      const height = backgroundRef.current.offsetHeight * SCALE;
+      createGIF({ images: gifFrames, gifWidth: width, gifHeight: height }, (obj) => {
+        if (!obj.error) {
+          let image = obj.image;
+          let animatedImage = document.createElement('a');
+          animatedImage.setAttribute('href', image);
+          animatedImage.setAttribute('download', 'simp.gif');
+          animatedImage.style.display = 'none';
+          document.body.appendChild(animatedImage);
+          animatedImage.click();
+          document.body.removeChild(animatedImage);
+        }
+        setAllGIFFramesCaptured(false);
+        setGIFFrames([]);
+        setFrames([]);
+      });
+    }
+  }, [allGIFFramesCaptured, gifFrames, frames]);
 
-    const scale = 3
-
+  const takeSnapshot = async () => {
+    await sleep(1000);
     const node = backgroundRef.current;
 
     const style = {
-      transform: 'scale('+scale+')',
+      transform: 'scale('+SCALE+')',
       transformOrigin: 'top left',
       width: node.offsetWidth + "px",
       height: node.offsetHeight + "px",
     }
 
     const param = {
-      height: node.offsetHeight * scale,
-      width: node.offsetWidth * scale,
+      height: node.offsetHeight * SCALE,
+      width: node.offsetWidth * SCALE,
       quality: 1,
       style
     }
 
-    domtoimage.toPng(node, param)
-      .then(function (dataUrl) {
-        window.open(base64toBlobURL(dataUrl), '_blank');
-        setExporting(false);
-      })
-      .catch(function (error) {
-        console.error('oops, something went wrong!', error);
-        setExporting(false);
-      });
+    const base64Image = await domtoimage.toPng(node, param)
+    return base64toBlobURL(base64Image)
+  }
+
+  const onExport = () => {
+    setExporting(true);
+
+    setTimeout(() => {
+      takeSnapshot()
+        .then(blobUrl => {
+          window.open(blobUrl, '_blank');
+        })
+        .catch(error => {
+          console.log("Error: "+error);
+        })
     }, 100);
   }
 
   const onRecord = () => {
+    setFrames([]);
     setRecording(true);
-    startWatching();
 
-    setTimeout(async () => {
+    setTimeout(() => {
       setRecording(false);
-
-      stopWatching();
-      const video = await generateVideo();
-      console.log({ video });
+      setExportingGIF(true);
     }, 5000)
   }
 
@@ -116,8 +161,8 @@ function App() {
         colors={colors}
         language={language}
         exporting={exporting}
-        text={text}
-        setText={setText}
+        editorState={editorState}
+        setEditorState={setEditorState}
       />
       </div>
     </>

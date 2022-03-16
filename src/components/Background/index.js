@@ -15,8 +15,8 @@ export default forwardRef(( props, ref ) => {
     colors,
     language,
     exporting,
-    text,
-    setText
+    editorState,
+    setEditorState
   } = props;
 
   const backgroundRef = ref;
@@ -105,7 +105,7 @@ export default forwardRef(( props, ref ) => {
       handleLeftEl.removeEventListener('mousedown', initResizeLeft, false);
       handleBottomEl.removeEventListener('mousedown', initResizeBottom, false);
     }
-  },[]);
+  },[ backgroundRef ]);
 
 
   return (
@@ -122,8 +122,8 @@ export default forwardRef(( props, ref ) => {
         colors={colors}
         language={language}
         exporting={exporting}
-        text={text}
-        setText={setText}
+        editorState={editorState}
+        setEditorState={setEditorState}
       />
     </div>
   );
