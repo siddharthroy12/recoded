@@ -90,6 +90,7 @@ export default forwardRef(( props, ref ) => {
         backgroundEl.style.height = MIN_HEIGHT + 'px';
       }
 
+      window.scrollTo(0,document.body.scrollHeight);
     }
 
     function stopResizeBottom() {

@@ -38,7 +38,7 @@ export default function BackgroundColorInput({ value, onChange }) {
             opacity: !showOptions ? '0' : '100%',
             pointerEvents: !showOptions ? 'none' : 'auto'
           }}>
-          {[1,2,3,4].map(number => (
+          {[1,2,3,4,5].map(number => (
             <div className="option" onClick={ () => onSelectOption(number) } key={number}>
               <div className={`circle background-color-${number}`} />
             </div>

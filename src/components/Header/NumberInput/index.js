@@ -1,4 +1,11 @@
 export default function NumberInput({ name, value, onChange }) {
+  let onChangeInput = (event) => {
+    if (event.target.value >= 0) {
+      onChange(event.target.value);
+    } else {
+      onChange(0);
+    }
+  }
   return (
     <div className="select-input">
       <label htmlFor={name} className="input-label">{name}</label>
@@ -8,7 +15,7 @@ export default function NumberInput({ name, value, onChange }) {
         name={name}
         value={value}
         className="input-box"
-        onChange={e => onChange(e.target.value)}
+        onChange={onChangeInput}
       />
     </div>
   );
