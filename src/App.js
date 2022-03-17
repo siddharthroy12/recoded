@@ -82,9 +82,8 @@ function App() {
       const height = backgroundRef.current.offsetHeight * SCALE;
       const framesToExport = [...gifFrames];
       for (let _ of [1,2,3,4,5,6,7,8]) {
-        framesToExport.push(gifFrames[gifFrames.length-1]);
+        framesToExport.unShift(gifFrames[0]);
       }
-      console.log(framesToExport);
       createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
         if (!obj.error) {
           let image = obj.image;
