@@ -74,6 +74,7 @@ export default function Window({ borderRadius, fontSize,
   const editorRef = useRef(null);
 
   useEffect(() => {
+    console.log({editorState});
     editorRef.current.editor.moveCursorTo(editorState.row, editorState.column);
   }, [editorState]);
 
@@ -99,10 +100,26 @@ export default function Window({ borderRadius, fontSize,
         showPrintMargin={false}
         value={editorState.text}
         onChange={(text, event) => {
-          setEditorState(prev => ({...prev, text }))
-          setEditorState(prev => ({...prev, row: event.end.row, column: event.end.column }));
-        }}
-        onCursorChange={(value) => {
+          // To fix cursor position on autocomplete
+          let finalRow = event.end.row;
+          let finalColumn = event.end.column;
+
+          if (event.start.row < event.end.row) {
+            finalRow = event.start.row + 1;
+          } else if (event.start.row > event.end.row) {
+            finalRow = event.start.row - 1;
+          }
+
+          if (event.start.column < event.end.column) {
+            finalColumn = event.start.column + 1;
+          } else if (event.start.column > event.end.column) {
+            finalColumn = event.start.column - 1;
+          }
+
+          setEditorState(prev => ({
+            ...prev,
+            text, row: finalRow, column: finalColumn
+          }));
         }}
         fontSize={fontSize + 'px'}
         cursorStart={1}

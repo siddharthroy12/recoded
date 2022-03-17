@@ -5,11 +5,7 @@ import domtoimage from 'dom-to-image';
 import { createGIF } from 'gifshot';
 import './App.css';
 
-const SCALE = 3;
-
-function sleep(milliseconds) {
-  return new Promise((resolve) => setTimeout(() => resolve(), milliseconds));
-}
+const SCALE = 1.6;
 
 function base64toBlobURL(base64ImageData) {
   const contentType = 'image/png';
@@ -50,6 +46,7 @@ function App() {
   const [gifFrames, setGIFFrames] = useState([]);
   const [editorState, setEditorState] = useState({ text: '', row: 0, column: 0 });
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
+  const [singleFrameProcessing, setSingleFrameProcessing] = useState(false);
 
   useEffect(() => {
     if (recording) {
@@ -58,18 +55,24 @@ function App() {
   }, [recording, editorState]);
 
   useEffect(() => {
-    if (exportingGIF) {
-      setEditorState(frames[currentFrameToCapture])
-      setCurrentFrameToCapture(prev => prev+1);
+    if (exportingGIF && !singleFrameProcessing) {
+      setTimeout(() => {
+      setSingleFrameProcessing(true);
+      setEditorState(({ ...frames[currentFrameToCapture], column: frames[currentFrameToCapture].text.length }))
       takeSnapshot()
         .then(imageBlob => setGIFFrames(prev => [...prev, imageBlob]));
+      setCurrentFrameToCapture(prev => prev+1);
+
       if (currentFrameToCapture === (frames.length - 1)) {
         setExportingGIF(false);
         setAllGIFFramesCaptured(true);
         setCurrentFrameToCapture(0);
       }
+
+      setSingleFrameProcessing(false);
+      }, 1000);
     }
-  }, [exportingGIF, currentFrameToCapture, frames]);
+  }, [exportingGIF, currentFrameToCapture, frames, singleFrameProcessing]);
 
   useEffect(() => {
     if (allGIFFramesCaptured && (gifFrames.length === frames.length)) {
@@ -94,7 +97,6 @@ function App() {
   }, [allGIFFramesCaptured, gifFrames, frames]);
 
   const takeSnapshot = async () => {
-    await sleep(1000);
     const node = backgroundRef.current;
 
     const style = {
@@ -126,6 +128,7 @@ function App() {
         .catch(error => {
           console.log("Error: "+error);
         })
+        .finally(() => setExporting(false));
     }, 100);
   }
 

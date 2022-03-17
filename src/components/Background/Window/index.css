@@ -58,3 +58,7 @@
 .ace_hidden-cursors {
   opacity: 0;
 }
+
+.ace_cursor {
+    animation: none!important
+}
