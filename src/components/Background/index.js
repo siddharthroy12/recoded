@@ -15,6 +15,7 @@ export default forwardRef(( props, ref ) => {
     colors,
     language,
     exporting,
+    exportingGIF,
     editorState,
     setEditorState
   } = props;
@@ -113,15 +114,16 @@ export default forwardRef(( props, ref ) => {
       className={`background background-color-${backgroundColor}`}
       ref={backgroundRef}
       style={{ padding: padding+'px' }}>
-      <div className="resize-handle-left" ref={handleLeftRef} style={{ display: !exporting ? 'block' : 'none' }} />
-      <div className="resize-handle-right" ref={handleRightRef} style={{ display: !exporting ? 'block' : 'none' }} />
-      <div className="resize-handle-bottom" ref={handleBottomRef} style={{ display: !exporting ? 'block' : 'none' }} />
+      <div className="resize-handle-left" ref={handleLeftRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
+      <div className="resize-handle-right" ref={handleRightRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
+      <div className="resize-handle-bottom" ref={handleBottomRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
       <Window
         borderRadius={borderRadius}
         fontSize={fontSize}
         colors={colors}
         language={language}
         exporting={exporting}
+        exportingGIF={exportingGIF}
         editorState={editorState}
         setEditorState={setEditorState}
       />

@@ -9,7 +9,9 @@ export default function Header({ padding, setPadding, colors, setColors,
                                  language, setLanguage, borderRadius,
                                  setBorderRadius, backgroundColor,
                                  setBackgroundColor, onExport, onRecord,
-                                 fontSize, setFontSize }) {
+                                 fontSize, setFontSize, exportingGIF,
+                                 allGIFFramesCaptured, recording }) {
+  const recordButtonText = (exportingGIF || allGIFFramesCaptured) ? 'Saving' : recording ? 'Stop' : 'Record';
   return (
     <div className="header-container">
     <header className="header">
@@ -23,8 +25,8 @@ export default function Header({ padding, setPadding, colors, setColors,
         <Button type="export" onClick={onExport}>
           Export
         </Button>
-        <Button type="record" onClick={onRecord}>
-          Record
+        <Button type="record" onClick={onRecord} disabled={exportingGIF || allGIFFramesCaptured}>
+          { recordButtonText }
         </Button>
       </div>
     </header>

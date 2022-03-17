@@ -5,7 +5,7 @@ import domtoimage from 'dom-to-image';
 import { createGIF } from 'gifshot';
 import './App.css';
 
-const SCALE = 1.6;
+const SCALE = 1.9;
 
 function base64toBlobURL(base64ImageData) {
   const contentType = 'image/png';
@@ -31,7 +31,7 @@ function base64toBlobURL(base64ImageData) {
 
 function App() {
   const backgroundRef = useRef(null);
-  // use Redux? nah, Prop drilling is cool
+  // This needs refactoring
   const [padding, setPadding] = useState(16);
   const [colors, setColors] = useState('One Dark');
   const [language, setLanguage] = useState('HTML');
@@ -57,8 +57,10 @@ function App() {
   useEffect(() => {
     if (exportingGIF && !singleFrameProcessing) {
       setTimeout(() => {
+
       setSingleFrameProcessing(true);
-      setEditorState(({ ...frames[currentFrameToCapture], column: frames[currentFrameToCapture].text.length }))
+      setEditorState(frames[currentFrameToCapture])
+
       takeSnapshot()
         .then(imageBlob => setGIFFrames(prev => [...prev, imageBlob]));
       setCurrentFrameToCapture(prev => prev+1);
@@ -70,7 +72,7 @@ function App() {
       }
 
       setSingleFrameProcessing(false);
-      }, 1000);
+      }, 800);
     }
   }, [exportingGIF, currentFrameToCapture, frames, singleFrameProcessing]);
 
@@ -78,7 +80,12 @@ function App() {
     if (allGIFFramesCaptured && (gifFrames.length === frames.length)) {
       const width = backgroundRef.current.offsetWidth * SCALE;
       const height = backgroundRef.current.offsetHeight * SCALE;
-      createGIF({ images: gifFrames, gifWidth: width, gifHeight: height }, (obj) => {
+      const framesToExport = [...gifFrames];
+      for (let _ of [1,2,3,4,5,6,7,8]) {
+        framesToExport.push(gifFrames[gifFrames.length-1]);
+      }
+      console.log(framesToExport);
+      createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
         if (!obj.error) {
           let image = obj.image;
           let animatedImage = document.createElement('a');
@@ -133,13 +140,14 @@ function App() {
   }
 
   const onRecord = () => {
-    setFrames([]);
-    setRecording(true);
-
-    setTimeout(() => {
+    if (recording) {
       setRecording(false);
       setExportingGIF(true);
-    }, 5000)
+      return;
+    }
+
+    setFrames([]);
+    setRecording(true);
   }
 
   return (
@@ -151,6 +159,9 @@ function App() {
         borderRadius={borderRadius} setBorderRadius={setBorderRadius}
         backgroundColor={backgroundColor} setBackgroundColor={setBackgroundColor}
         fontSize={fontSize} setFontSize={setFontSize}
+        exportingGIF={exportingGIF}
+        allGIFFramesCaptured={allGIFFramesCaptured}
+        recording={recording}
         onExport={onExport}
         onRecord={onRecord}
       />
@@ -164,6 +175,7 @@ function App() {
         colors={colors}
         language={language}
         exporting={exporting}
+        exportingGIF={exportingGIF || allGIFFramesCaptured}
         editorState={editorState}
         setEditorState={setEditorState}
       />

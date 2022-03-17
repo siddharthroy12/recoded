@@ -55,7 +55,8 @@
 .ace_editor {
   font-family: 'Fira Code', monospace !important;
 }
-.ace_hidden-cursors {
+
+.ace_hidden-cursors .ace_cursor {
   opacity: 0;
 }
 

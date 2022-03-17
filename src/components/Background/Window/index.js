@@ -70,11 +70,10 @@ export const LANGUAGE = {
 
 export default function Window({ borderRadius, fontSize,
                                  colors, language, exporting,
-                                 editorState, setEditorState }) {
+                                 editorState, setEditorState, exportingGIF }) {
   const editorRef = useRef(null);
 
   useEffect(() => {
-    console.log({editorState});
     editorRef.current.editor.moveCursorTo(editorState.row, editorState.column);
   }, [editorState]);
 
@@ -87,7 +86,7 @@ export default function Window({ borderRadius, fontSize,
           <div className="title-button" />
           <div className="title-button" />
         </div>
-        <p className="title-text" >
+        <p className="title-text" contentEditable>
           App.tsx
         </p>
       </div>
@@ -123,6 +122,8 @@ export default function Window({ borderRadius, fontSize,
         }}
         fontSize={fontSize + 'px'}
         cursorStart={1}
+        focus={exportingGIF}
+        readOnly={exportingGIF}
         onLoad={element => {
           element.renderer.setScrollMargin(10, 10);
           /* I hope this doesn't have any effect on performance */

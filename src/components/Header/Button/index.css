@@ -21,3 +21,7 @@
   color: #017A2A;
   background-color: #D0FFDA;
 }
+
+.button.disabled {
+  cursor: not-allowed;
+}
