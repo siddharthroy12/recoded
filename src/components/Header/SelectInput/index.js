@@ -32,15 +32,17 @@ export default function SelectInput({ name, value, onChange, options }) {
         { value }
         <ArrowDownIcon />
       </div>
-      {showOptions && (
-        <div className="options">
+      <div className="options"
+        style={{
+          opacity: !showOptions ? '0' : '100%',
+          pointerEvents: !showOptions ? 'none' : 'auto'
+        }}>
           { options.map(option => (
             <div className="option" onClick={ () => onSelectOption(option) } key={option}>
               { option }
             </div>
           ))}
         </div>
-      )}
     </div>
   );
 }

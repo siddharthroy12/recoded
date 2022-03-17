@@ -32,15 +32,18 @@ export default function BackgroundColorInput({ value, onChange }) {
         <div className={`circle background-color-${value}`} />
         <ArrowDownIcon />
         </div>
-      {showOptions && (
-        <div className="options" style={{ width: '40px' }}>
+        <div className="options"
+          style={{
+            width: '40px',
+            opacity: !showOptions ? '0' : '100%',
+            pointerEvents: !showOptions ? 'none' : 'auto'
+          }}>
           {[1,2,3,4].map(number => (
             <div className="option" onClick={ () => onSelectOption(number) } key={number}>
               <div className={`circle background-color-${number}`} />
             </div>
           ))}
         </div>
-      )}
     </div>
   );
 }

@@ -3,16 +3,17 @@
   width: 100%;
   background-color: #252525;
   overflow: hidden;
+  box-shadow: rgb(0 0 0 / 43%) 10px 10px 62px 3px;
 }
 
 .title-bar {
   height: 35px;
-  background-color: #141414;
+  background-color: #202020;
   position: relative;
 }
 
 .title-text {
-  color: white;
+  color: #afafaf;
   position: absolute;
   left: 50%;
   top: 0;
@@ -33,23 +34,11 @@
 }
 
 .title-button {
-  background-color: white;
+  background-color: #3a3a3a;
   width: 10px;
   height: 10px;
   border-radius: 50px;
   margin: 0 5px;
-}
-
-.title-button:nth-child(3) {
-  background-color: #0EF85E;
-}
-
-.title-button:nth-child(1) {
-  background-color: #F80E54;
-}
-
-.title-button:nth-child(2) {
-  background-color: #FFE146;
 }
 
 .ace_editor {

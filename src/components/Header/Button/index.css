@@ -13,13 +13,13 @@
 }
 
 .button.record {
-  color: #FF4848;
-  background-color: #FFD0D9;
+  color: #ff6363;
+  background-color: rgba(255,99,99,.15);
 }
 
 .button.export {
-  color: #017A2A;
-  background-color: #D0FFDA;
+  color: #080c09;
+  background-color: #61ff82;
 }
 
 .button.disabled {

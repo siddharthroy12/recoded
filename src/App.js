@@ -1,6 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Background from './components/Background';
+import Footer from './components/Footer';
 import domtoimage from 'dom-to-image';
 import { createGIF } from 'gifshot';
 import './App.css';
@@ -29,10 +30,20 @@ function base64toBlobURL(base64ImageData) {
   return blobUrl;
 }
 
+const downloadBlob = (blob, filename) => {
+  let element = document.createElement('a');
+  element.setAttribute('href', blob);
+  element.setAttribute('download', filename);
+  element.style.display = 'none';
+  document.body.appendChild(element);
+  element.click();
+  document.body.removeChild(element);
+}
+
 function App() {
   const backgroundRef = useRef(null);
   // This needs refactoring
-  const [padding, setPadding] = useState(16);
+  const [padding, setPadding] = useState(42);
   const [colors, setColors] = useState('One Dark');
   const [language, setLanguage] = useState('HTML');
   const [borderRadius, setBorderRadius] = useState(5);
@@ -82,18 +93,11 @@ function App() {
       const height = backgroundRef.current.offsetHeight * SCALE;
       const framesToExport = [...gifFrames];
       for (let _ of [1,2,3,4,5,6,7,8]) {
-        framesToExport.unShift(gifFrames[0]);
+        framesToExport.unshift(gifFrames[0]);
       }
       createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
         if (!obj.error) {
-          let image = obj.image;
-          let animatedImage = document.createElement('a');
-          animatedImage.setAttribute('href', image);
-          animatedImage.setAttribute('download', 'simp.gif');
-          animatedImage.style.display = 'none';
-          document.body.appendChild(animatedImage);
-          animatedImage.click();
-          document.body.removeChild(animatedImage);
+          downloadBlob(obj.image, 'recoded.gif');
         }
         setAllGIFFramesCaptured(false);
         setGIFFrames([]);
@@ -101,6 +105,8 @@ function App() {
       });
     }
   }, [allGIFFramesCaptured, gifFrames, frames]);
+
+  
 
   const takeSnapshot = async () => {
     const node = backgroundRef.current;
@@ -129,7 +135,7 @@ function App() {
     setTimeout(() => {
       takeSnapshot()
         .then(blobUrl => {
-          window.open(blobUrl, '_blank');
+          downloadBlob(blobUrl, 'recoded.png');
         })
         .catch(error => {
           console.log("Error: "+error);
@@ -179,6 +185,7 @@ function App() {
         setEditorState={setEditorState}
       />
       </div>
+      <Footer />
     </>
   );
 }

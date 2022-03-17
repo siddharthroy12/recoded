@@ -110,7 +110,11 @@ export default function Window({ borderRadius, fontSize,
           }
 
           if (event.start.column < event.end.column) {
-            finalColumn = event.start.column + 1;
+            if (event.lines[0] === '  ') {
+              finalColumn = event.end.column;
+            } else {
+              finalColumn = event.start.column + 1;
+            }
           } else if (event.start.column > event.end.column) {
             finalColumn = event.start.column - 1;
           }
@@ -122,6 +126,7 @@ export default function Window({ borderRadius, fontSize,
         }}
         fontSize={fontSize + 'px'}
         cursorStart={1}
+        tabSize={2}
         focus={exportingGIF}
         readOnly={exportingGIF}
         onLoad={element => {

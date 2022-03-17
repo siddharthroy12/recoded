@@ -13,13 +13,26 @@ code {
 }
 
 :root {
-  --header-background: #ffffff;
-  --page-background: #181818;
+  --header-background: #191919;
+  --header-border: 1px solid hsla(0,0%,100%,0.2);
+  --header-box-shadow: 0 4px 16px 0 rgb(0 0 0 / 60%);
+  --page-background: #131313;
   --app-name: #000000;
-  --option-name: #999;
-  --option-box-border: #DEDEDE;
+  --option-name: hsla(0,0%,100%,0.4);
+  --option-box-border: hsla(0,0%,100%,0.1);
   --input-value: #848484;
   --footer-text: #989898;
+}
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
 }
 
 ::-webkit-scrollbar {
