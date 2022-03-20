@@ -11,3 +11,22 @@ footer {
   width: 25px;
   height: 25px;
 }
+
+.footer-section {
+  display: flex;
+  align-items: center;
+  margin: 0 30px;
+}
+
+.footer-section p {
+  margin-right: 5px;
+}
+
+.footer-section a {
+  color: currentColor;
+  text-decoration: none;
+}
+
+.footer-section > a {
+  margin-right: 5px;
+}

@@ -1,4 +1,4 @@
-import { useRef, useEffect } from "react";
+import { useRef, useEffect, useState } from "react";
 import AceEditor from "react-ace";
 
 import "ace-builds/src-noconflict/mode-java";
@@ -36,10 +36,7 @@ export const COLORS = {
   'One Dark': 'one_dark',
   'Dracula': 'dracula',
   'Nord': 'nord_dark',
-  'Tomorrow': 'tomorrow_night',
-  'Gruv Box': 'gruvbox',
   'Vibrant Ink': 'vibrant_ink',
-  'Ambiance': 'ambiance'
 }
 
 export const LANGUAGE = {
@@ -69,11 +66,30 @@ export default function Window({ borderRadius, fontSize,
                                  colors, language, exporting,
                                  editorState, setEditorState, exportingGIF }) {
   const editorRef = useRef(null);
+  const colorsRef = useRef(null);
 
   useEffect(() => {
     editorRef.current.editor.moveCursorTo(editorState.row, editorState.column);
   }, [editorState]);
 
+  const [shouldUpdate, setShouldUpdate] = useState(false)
+
+  // set shouldUpdate => true on initial render, triggering re-render
+  useEffect(() => {
+    if (shouldUpdate) setShouldUpdate(false)
+  }, [shouldUpdate])
+
+  // Render twice when colors change to
+  // update the title bar text background color to match the editors color
+  useEffect(() => {
+    if (colors !== colorsRef.current) {
+      setShouldUpdate(true);
+    }
+    colorsRef.current = colors;
+  }, [colors]);
+
+  const backgroundColor = editorRef.current ?
+    getComputedStyle(editorRef.current.refEditor)['background-color'] : null;
 
   return (
     <div className="window" style={{ borderRadius: borderRadius + 'px' }}>
@@ -83,7 +99,7 @@ export default function Window({ borderRadius, fontSize,
           <div className="title-button" />
           <div className="title-button" />
         </div>
-        <p className="title-text" contentEditable>
+        <p className="title-text" contentEditable style={{ backgroundColor }}>
           App.tsx
         </p>
       </div>
@@ -96,7 +112,6 @@ export default function Window({ borderRadius, fontSize,
         showPrintMargin={false}
         value={editorState.text}
         onChange={(text, event) => {
-          console.log(event);
           // To fix cursor position on autocomplete
           let finalRow = event.end.row;
           let finalColumn = event.end.column;

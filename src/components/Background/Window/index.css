@@ -7,7 +7,7 @@
 }
 
 .title-bar {
-  height: 35px;
+  height: 40px;
   background-color: #202020;
   position: relative;
 }
@@ -15,12 +15,15 @@
 .title-text {
   color: #afafaf;
   position: absolute;
-  left: 50%;
-  top: 0;
-  transform: translateX(-50%);
-  margin: 10px 0;
+  left: 80px;
+  bottom: 0;
+  margin: 0;
+  padding: 7px 16px;
   font-size: 0.9em;
   min-width: 10px;
+  background-color: #292a32;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
 }
 
 .title-buttons {
