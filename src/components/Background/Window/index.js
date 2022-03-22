@@ -87,7 +87,6 @@ export default function Window({ colors, language, exporting, padding,
         fontSize={'16px'}
         cursorStart={1}
         tabSize={2}
-        focus={exportingGIF}
         readOnly={exportingGIF}
         onLoad={element => {
           element.renderer.setScrollMargin(10, 10);

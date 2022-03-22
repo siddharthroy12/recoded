@@ -2,33 +2,11 @@ import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Background from './components/Background';
 import Footer from './components/Footer';
-import domtoimage from 'dom-to-image';
+import domtoimage from 'dom-to-image-more';
 import { createGIF } from 'gifshot';
 import './App.css';
 
 const SCALE = 1.9;
-
-function base64toBlobURL(base64ImageData) {
-  const contentType = 'image/png';
-  const byteCharacters = atob(base64ImageData.substr(`data:${contentType};base64,`.length));
-  const byteArrays = [];
-
-  for (let offset = 0; offset < byteCharacters.length; offset += 1024) {
-    const slice = byteCharacters.slice(offset, offset + 1024);
-
-    const byteNumbers = new Array(slice.length);
-    for (let i = 0; i < slice.length; i++) {
-      byteNumbers[i] = slice.charCodeAt(i);
-    }
-
-    const byteArray = new Uint8Array(byteNumbers);
-
-    byteArrays.push(byteArray);
-  }
-  const blob = new Blob(byteArrays, {type: contentType});
-  const blobUrl = URL.createObjectURL(blob);
-  return blobUrl;
-}
 
 const downloadBlob = (blob, filename) => {
   let element = document.createElement('a');
@@ -41,8 +19,8 @@ const downloadBlob = (blob, filename) => {
 }
 
 function App() {
+  // TODO: Refactor this to use context API
   const backgroundRef = useRef(null);
-  // This needs refactoring
   const [padding, setPadding] = useState(42);
   const [colors, setColors] = useState('One Dark');
   const [language, setLanguage] = useState('JavaScript');
@@ -57,7 +35,6 @@ function App() {
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
   const [singleFrameProcessing, setSingleFrameProcessing] = useState(false);
 
-  // When recording each editor state
   useEffect(() => {
     if (recording) {
       setFrames(prev => [...prev, { ...editorState }]);
@@ -74,13 +51,13 @@ function App() {
         setCurrentFrameToCapture(prev => prev +1);
       }
     }
-  }, [exportingGIF, singleFrameProcessing, currentFrameToCapture])
+  }, [exportingGIF, singleFrameProcessing, currentFrameToCapture, frames.length])
 
   useEffect(() => {
-    if(exportingGIF && !singleFrameProcessing) {
+    if(exportingGIF) {
       setEditorState(frames[currentFrameToCapture])
     }
-  }, [exportingGIF, currentFrameToCapture, frames, singleFrameProcessing])
+  }, [exportingGIF, currentFrameToCapture, frames])
 
   useEffect(() => {
      if (exportingGIF && !singleFrameProcessing) {
@@ -132,7 +109,7 @@ function App() {
     }
 
     const base64Image = await domtoimage.toPng(node, param)
-    return base64toBlobURL(base64Image)
+    return base64Image;
   }
 
   const onExport = () => {
@@ -157,7 +134,7 @@ function App() {
       return;
     }
 
-    setFrames([]);
+    setFrames([{ ...editorState }]);
     setRecording(true);
   }
 
