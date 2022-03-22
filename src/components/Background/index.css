@@ -1,8 +1,9 @@
 .background {
-  width: 561px;
-  height: 351px;
+  width: 400px;
+  height: 200px;
   position: relative;
   box-sizing: border-box;
+  z-index:2;
 }
 
 .resize-handle-left {

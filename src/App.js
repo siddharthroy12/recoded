@@ -45,20 +45,19 @@ function App() {
   // This needs refactoring
   const [padding, setPadding] = useState(42);
   const [colors, setColors] = useState('One Dark');
-  const [language, setLanguage] = useState('HTML');
-  const [borderRadius, setBorderRadius] = useState(5);
+  const [language, setLanguage] = useState('JavaScript');
   const [backgroundColor, setBackgroundColor] = useState(2);
-  const [fontSize, setFontSize] = useState(16);
   const [exporting, setExporting] = useState(false);
   const [recording, setRecording] = useState(false);
   const [exportingGIF, setExportingGIF] = useState(false);
   const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
   const [frames, setFrames] = useState([]);
   const [gifFrames, setGIFFrames] = useState([]);
-  const [editorState, setEditorState] = useState({ text: '', row: 0, column: 0 });
+  const [editorState, setEditorState] = useState({ text: '// Type your code here', row: 0, column: 0 });
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
   const [singleFrameProcessing, setSingleFrameProcessing] = useState(false);
 
+  // When recording each editor state
   useEffect(() => {
     if (recording) {
       setFrames(prev => [...prev, { ...editorState }]);
@@ -67,33 +66,42 @@ function App() {
 
   useEffect(() => {
     if (exportingGIF && !singleFrameProcessing) {
-      setTimeout(() => {
-
-      setSingleFrameProcessing(true);
-      setEditorState(frames[currentFrameToCapture])
-
-      takeSnapshot()
-        .then(imageBlob => setGIFFrames(prev => [...prev, imageBlob]));
-      setCurrentFrameToCapture(prev => prev+1);
-
-      if (currentFrameToCapture === (frames.length - 1)) {
+      if (currentFrameToCapture === (frames.length-1)) {
         setExportingGIF(false);
         setAllGIFFramesCaptured(true);
         setCurrentFrameToCapture(0);
+      } else {
+        setCurrentFrameToCapture(prev => prev +1);
       }
-
-      setSingleFrameProcessing(false);
-      }, 800);
     }
-  }, [exportingGIF, currentFrameToCapture, frames, singleFrameProcessing]);
+  }, [exportingGIF, singleFrameProcessing, currentFrameToCapture])
+
+  useEffect(() => {
+    if(exportingGIF && !singleFrameProcessing) {
+      setEditorState(frames[currentFrameToCapture])
+    }
+  }, [exportingGIF, currentFrameToCapture, frames, singleFrameProcessing])
+
+  useEffect(() => {
+     if (exportingGIF && !singleFrameProcessing) {
+      setSingleFrameProcessing(true);
+
+      takeSnapshot()
+        .then(imageBlob => {
+          setGIFFrames(prev => [...prev, imageBlob]);
+          setSingleFrameProcessing(false);
+        });
+    }
+  }, [exportingGIF, editorState, frames, singleFrameProcessing]);
 
   useEffect(() => {
     if (allGIFFramesCaptured && (gifFrames.length === frames.length)) {
       const width = backgroundRef.current.offsetWidth * SCALE;
       const height = backgroundRef.current.offsetHeight * SCALE;
+      console.log({ gifFrames });
       const framesToExport = [...gifFrames];
       for (let _ of [1,2,3,4,5,6,7,8]) {
-        framesToExport.unshift(gifFrames[0]);
+        framesToExport.push(gifFrames[gifFrames.length-1]);
       }
       createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
         if (!obj.error) {
@@ -105,8 +113,6 @@ function App() {
       });
     }
   }, [allGIFFramesCaptured, gifFrames, frames]);
-
-  
 
   const takeSnapshot = async () => {
     const node = backgroundRef.current;
@@ -161,9 +167,7 @@ function App() {
         padding={padding} setPadding={setPadding}
         colors={colors} setColors={setColors}
         language={language} setLanguage={setLanguage}
-        borderRadius={borderRadius} setBorderRadius={setBorderRadius}
         backgroundColor={backgroundColor} setBackgroundColor={setBackgroundColor}
-        fontSize={fontSize} setFontSize={setFontSize}
         exportingGIF={exportingGIF}
         allGIFFramesCaptured={allGIFFramesCaptured}
         recording={recording}
@@ -175,8 +179,6 @@ function App() {
         ref={backgroundRef}
         backgroundColor={backgroundColor}
         padding={padding}
-        borderRadius={borderRadius}
-        fontSize={fontSize}
         colors={colors}
         language={language}
         exporting={exporting}

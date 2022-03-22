@@ -5,6 +5,11 @@ footer {
   margin: 50px 0;
   color: var(--footer-text);
   font-size: 0.8em;
+  position: fixed;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 1;
 }
 
 .logo {

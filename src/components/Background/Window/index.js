@@ -1,75 +1,19 @@
 import { useRef, useEffect, useState } from "react";
 import AceEditor from "react-ace";
 
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/mode-c_cpp";
-import "ace-builds/src-noconflict/mode-sh";
-import "ace-builds/src-noconflict/mode-plain_text";
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/mode-csharp";
-import "ace-builds/src-noconflict/mode-dart";
-import "ace-builds/src-noconflict/mode-rust";
-import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/mode-html";
-import "ace-builds/src-noconflict/mode-css";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/mode-jsx";
-import "ace-builds/src-noconflict/mode-django";
-import "ace-builds/src-noconflict/mode-lua";
-import "ace-builds/src-noconflict/mode-perl";
-import "ace-builds/src-noconflict/mode-php";
-import "ace-builds/src-noconflict/mode-julia";
-import "ace-builds/src-noconflict/mode-typescript";
-import "ace-builds/src-noconflict/mode-tsx";
-
-import "ace-builds/src-noconflict/theme-one_dark";
-import "ace-builds/src-noconflict/theme-dracula";
-import "ace-builds/src-noconflict/theme-nord_dark";
-import "ace-builds/src-noconflict/theme-tomorrow_night";
-import "ace-builds/src-noconflict/theme-gruvbox";
-import "ace-builds/src-noconflict/theme-vibrant_ink";
-import "ace-builds/src-noconflict/theme-ambiance";
+import LANGUAGE from './modes.js';
+import COLORS from "./colors.js";
 
 import './index.css';
 
-export const COLORS = {
-  'One Dark': 'one_dark',
-  'Dracula': 'dracula',
-  'Nord': 'nord_dark',
-  'Vibrant Ink': 'vibrant_ink',
-}
-
-export const LANGUAGE = {
-  'C++': 'c_cpp',
-  'Java': 'java',
-  'Bash': 'sh',
-  'Plain Text': 'plain_text',
-  'Python': 'python',
-  'C#': 'csharp',
-  'Dart': 'django',
-  'Rust': 'rust',
-  'JSON': 'json',
-  'HTML': 'html',
-  'CSS': 'css',
-  'JavaScript': 'javascript',
-  'JSX': 'jsx',
-  'Django': 'django',
-  'Lua': 'lua',
-  'Perl': 'perl',
-  'PHP': 'php',
-  'Julia': 'julia',
-  'TypeScript': 'typescript',
-  'TSX': 'tsx',
-}
-
-export default function Window({ borderRadius, fontSize,
-                                 colors, language, exporting,
+export default function Window({ colors, language, exporting, padding,
                                  editorState, setEditorState, exportingGIF }) {
   const editorRef = useRef(null);
   const colorsRef = useRef(null);
 
   useEffect(() => {
     editorRef.current.editor.moveCursorTo(editorState.row, editorState.column);
+    console.log(editorRef);
   }, [editorState]);
 
   const [shouldUpdate, setShouldUpdate] = useState(false)
@@ -92,15 +36,16 @@ export default function Window({ borderRadius, fontSize,
     getComputedStyle(editorRef.current.refEditor)['background-color'] : null;
 
   return (
-    <div className="window" style={{ borderRadius: borderRadius + 'px' }}>
+    <div className="window" style={{ borderRadius: padding === '0' ? '0' : '6px' }}>
       <div className="title-bar">
         <div className="title-buttons">
           <div className="title-button" />
           <div className="title-button" />
           <div className="title-button" />
         </div>
-        <p className="title-text" contentEditable style={{ backgroundColor }}>
-          App.tsx
+        <p className="title-text" style={{ backgroundColor }}>
+          <img src={`/lang_icons/${LANGUAGE[language]}.svg`} alt="" className="language-icon"/>
+          <span contentEditable>App.js</span>
         </p>
       </div>
       <AceEditor
@@ -139,7 +84,7 @@ export default function Window({ borderRadius, fontSize,
             text, row: finalRow, column: finalColumn
           }));
         }}
-        fontSize={fontSize + 'px'}
+        fontSize={'16px'}
         cursorStart={1}
         tabSize={2}
         focus={exportingGIF}
@@ -150,7 +95,7 @@ export default function Window({ borderRadius, fontSize,
           setInterval(() => element.resize(), 100);
         }}
         height="calc(100% - 35px)"
-        setOptions={{ highlightGutterLine: !exporting }}
+        setOptions={{ highlightGutterLine: !exporting, cursorStyle:"ace" }}
         editorProps={{ $blockScrolling: true }}
       />
     </div>

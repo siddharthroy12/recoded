@@ -4,14 +4,12 @@ import './index.css';
 
 const MAX_WIDTH = 1000;
 const MIN_WIDTH = 400;
-const MIN_HEIGHT = 300;
+const MIN_HEIGHT = 200;
 
 export default forwardRef(( props, ref ) => {
   const {
     backgroundColor,
     padding,
-    borderRadius,
-    fontSize,
     colors,
     language,
     exporting,
@@ -119,8 +117,7 @@ export default forwardRef(( props, ref ) => {
       <div className="resize-handle-right" ref={handleRightRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
       <div className="resize-handle-bottom" ref={handleBottomRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
       <Window
-        borderRadius={borderRadius}
-        fontSize={fontSize}
+        padding={padding}
         colors={colors}
         language={language}
         exporting={exporting}
