@@ -12,7 +12,7 @@
     An awesome too make Images and GIFs of your code!
     <br />
     <br />
-    <a href="https://github.com/siddharthroy12/recoder/issues">View Demo</a>
+    <a href="https://recoded.netlify.app/">View Demo</a>
     ·
     <a href="https://github.com/siddharthroy12/recoder/issues">Report Bug</a>
     ·
