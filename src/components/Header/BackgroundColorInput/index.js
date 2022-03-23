@@ -29,7 +29,7 @@ export default function BackgroundColorInput({ value, onChange }) {
           borderBottomLeftRadius: showOptions ? '0' : null
         }}
         onClick={onClickBox}>
-        <div className={`circle background-color-${value}`} />
+        <div className={`circle background-color-${value === "transparent" ? '' : value}`} style={{ backgroundColor: 'white' }} />
         <ArrowDownIcon />
         </div>
         <div className="options"
@@ -38,11 +38,14 @@ export default function BackgroundColorInput({ value, onChange }) {
             opacity: !showOptions ? '0' : '100%',
             pointerEvents: !showOptions ? 'none' : 'auto'
           }}>
-          {[1,2,3,4,5, 6].map(number => (
+          {[1,2,3,4,5,6].map(number => (
             <div className="option" onClick={ () => onSelectOption(number) } key={number}>
               <div className={`circle background-color-${number}`} />
             </div>
           ))}
+          <div className="option" onClick={ () => onSelectOption('transparent') }>
+            <div className={`circle`} style={{ backgroundColor: 'white' }}/>
+          </div>
         </div>
     </div>
   );

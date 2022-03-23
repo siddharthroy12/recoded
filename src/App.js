@@ -4,6 +4,7 @@ import Background from './components/Background';
 import Footer from './components/Footer';
 import domtoimage from 'dom-to-image-more';
 import { createGIF } from 'gifshot';
+import COLORS from './components/Background/Window/colors';
 import './App.css';
 
 const SCALE = 1.9;
@@ -22,7 +23,7 @@ function App() {
   // TODO: Refactor this to use context API
   const backgroundRef = useRef(null);
   const [padding, setPadding] = useState(42);
-  const [colors, setColors] = useState('One Dark');
+  const [colors, setColors] = useState(COLORS[0]);
   const [language, setLanguage] = useState('JavaScript');
   const [backgroundColor, setBackgroundColor] = useState(2);
   const [exporting, setExporting] = useState(false);
@@ -31,13 +32,13 @@ function App() {
   const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
   const [frames, setFrames] = useState([]);
   const [gifFrames, setGIFFrames] = useState([]);
-  const [editorState, setEditorState] = useState({ text: '// Type your code here', row: 0, column: 0 });
+  const [editorState, setEditorState] = useState('// Type your code here');
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
   const [singleFrameProcessing, setSingleFrameProcessing] = useState(false);
 
   useEffect(() => {
     if (recording) {
-      setFrames(prev => [...prev, { ...editorState }]);
+      setFrames(prev => [...prev, editorState ]);
     }
   }, [recording, editorState]);
 
@@ -75,7 +76,6 @@ function App() {
     if (allGIFFramesCaptured && (gifFrames.length === frames.length)) {
       const width = backgroundRef.current.offsetWidth * SCALE;
       const height = backgroundRef.current.offsetHeight * SCALE;
-      console.log({ gifFrames });
       const framesToExport = [...gifFrames];
       for (let _ of [1,2,3,4,5,6,7,8]) {
         framesToExport.push(gifFrames[gifFrames.length-1]);
@@ -134,7 +134,7 @@ function App() {
       return;
     }
 
-    setFrames([{ ...editorState }]);
+    setFrames([ editorState ]);
     setRecording(true);
   }
 

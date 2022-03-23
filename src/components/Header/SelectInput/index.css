@@ -5,7 +5,7 @@
   overflow-y: auto;
   background-color: var(--header-background);
   border: 1px solid var(--option-box-border);
-  width: 90px;
+  width: 100px;
   padding: 0 10px;
   font-size: 0.8em;
   color: var(--input-value);

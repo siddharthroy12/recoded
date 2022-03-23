@@ -110,7 +110,7 @@ export default forwardRef(( props, ref ) => {
 
   return (
     <div
-      className={`background background-color-${backgroundColor}`}
+      className={`background background-color-${(exporting && (backgroundColor === "transparent")) ? '' : backgroundColor}`}
       ref={backgroundRef}
       style={{ padding: padding+'px' }}>
       <div className="resize-handle-left" ref={handleLeftRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />

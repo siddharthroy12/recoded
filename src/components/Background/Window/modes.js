@@ -1,30 +1,31 @@
-import 'ace-builds/src-noconflict/ace';
-
-import "ace-builds/src-noconflict/mode-java";
-import "ace-builds/src-noconflict/mode-c_cpp";
-import "ace-builds/src-noconflict/mode-sh";
-import "ace-builds/src-noconflict/mode-plain_text";
-import "ace-builds/src-noconflict/mode-python";
-import "ace-builds/src-noconflict/mode-csharp";
-import "ace-builds/src-noconflict/mode-dart";
-import "ace-builds/src-noconflict/mode-rust";
-import "ace-builds/src-noconflict/mode-json";
-import "ace-builds/src-noconflict/mode-html";
-import "ace-builds/src-noconflict/mode-css";
-import "ace-builds/src-noconflict/mode-javascript";
-import "ace-builds/src-noconflict/mode-jsx";
-import "ace-builds/src-noconflict/mode-django";
-import "ace-builds/src-noconflict/mode-lua";
-import "ace-builds/src-noconflict/mode-php";
-import "ace-builds/src-noconflict/mode-julia";
-import "ace-builds/src-noconflict/mode-typescript";
-import "ace-builds/src-noconflict/mode-tsx";
+import 'prismjs/components/prism-core';
+import 'prismjs/components/prism-bash';
+import 'prismjs/components/prism-clike';
+import 'prismjs/components/prism-javascript';
+import 'prismjs/components/prism-python';
+import 'prismjs/components/prism-dart';
+import 'prismjs/components/prism-rust';
+import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-lua';
+import 'prismjs/components/prism-julia';
+import 'prismjs/components/prism-c';
+import 'prismjs/components/prism-cpp';
+import 'prismjs/components/prism-css';
+import 'prismjs/components/prism-markup';
+import 'prismjs/components/prism-csharp';
+import 'prismjs/components/prism-typescript';
+import 'prismjs/components/prism-markup-templating';
+require('prismjs/components/prism-java');
+require('prismjs/components/prism-jsx');
+require('prismjs/components/prism-tsx');
+require('prismjs/components/prism-php');
 
 const LANGUAGE = {
-  'C++': 'c_cpp',
+  'C': 'c',
+  'C++': 'cpp',
   'Java': 'java',
-  'Bash': 'sh',
-  'Plain Text': 'plain_text',
+  'Bash': 'bash',
+  'Plain Text': 'plaintext',
   'Python': 'python',
   'C#': 'csharp',
   'Dart': 'dart',

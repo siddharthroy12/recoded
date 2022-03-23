@@ -15,7 +15,7 @@ export default function Header({ padding, setPadding, colors, setColors,
     <div className="header-container">
     <header className="header">
       <div className="header__part">
-        <SelectInput name="Colors" value={colors} onChange={setColors} options={Object.keys(COLORS)} />
+        <SelectInput name="Colors" value={colors} onChange={setColors} options={COLORS} />
         <NumberInput name="Padding" value={padding} onChange={setPadding} />
         <SelectInput name="Language" value={language} onChange={setLanguage} options={Object.keys(LANGUAGE)} />
         <BackgroundColorInput value={backgroundColor} onChange={setBackgroundColor} />

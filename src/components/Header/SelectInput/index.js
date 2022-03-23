@@ -24,7 +24,7 @@ export default function SelectInput({ name, value, onChange, options }) {
       <div
         className="input-box"
         style={{
-          width: '90px',
+          width: '100px',
           borderBottomRightRadius: showOptions ? '0' : null,
           borderBottomLeftRadius: showOptions ? '0' : null
         }}

@@ -30,6 +30,7 @@ footer {
 .footer-section a {
   color: currentColor;
   text-decoration: none;
+  width: max-content;
 }
 
 .footer-section > a {
