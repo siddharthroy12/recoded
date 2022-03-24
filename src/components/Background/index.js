@@ -4,7 +4,6 @@ import './index.css';
 
 const MAX_WIDTH = 1000;
 const MIN_WIDTH = 400;
-const MIN_HEIGHT = 200;
 
 export default forwardRef(( props, ref ) => {
   const {
@@ -19,18 +18,14 @@ export default forwardRef(( props, ref ) => {
   } = props;
 
   const backgroundRef = ref;
-  /* const backgroundRef = useRef(null); */
   const handleRightRef = useRef(null);
   const handleLeftRef = useRef(null);
-  const handleBottomRef = useRef(null);
 
   useEffect(() => {
     const backgroundEl = backgroundRef.current;
     const handleRightEl = handleRightRef.current;
     const handleLeftEl = handleLeftRef.current;
-    const handleBottomEl = handleBottomRef.current;
 
-    // I cannot avoid duplicate functions here
     function initResizeRight() {
       window.addEventListener('mousemove', resizeRight, false);
       window.addEventListener('mouseup', stopResizeRight, false);
@@ -76,46 +71,23 @@ export default forwardRef(( props, ref ) => {
       window.removeEventListener('mouseup', stopResizeLeft, false);
     }
 
-    function initResizeBottom() {
-      window.addEventListener('mousemove', resizeBottom, false);
-      window.addEventListener('mouseup', stopResizeBottom, false);
-      }
-
-    function resizeBottom(e) {
-      e.preventDefault();
-      backgroundEl.style.height = ((e.clientY + window.scrollY) - backgroundEl.offsetTop) + 'px';
-      if (+(backgroundEl.style.height.replace('px', '')) < MIN_HEIGHT) {
-        backgroundEl.style.height = MIN_HEIGHT + 'px';
-      }
-
-      window.scrollTo(0,document.body.scrollHeight);
-    }
-
-    function stopResizeBottom() {
-      window.removeEventListener('mousemove', resizeBottom, false);
-      window.removeEventListener('mouseup', stopResizeBottom, false);
-    }
-
     handleRightEl.addEventListener('mousedown', initResizeRight, false);
     handleLeftEl.addEventListener('mousedown', initResizeLeft, false);
-    handleBottomEl.addEventListener('mousedown', initResizeBottom, false);
 
     return () => {
       handleRightEl.removeEventListener('mousedown', initResizeRight, false);
       handleLeftEl.removeEventListener('mousedown', initResizeLeft, false);
-      handleBottomEl.removeEventListener('mousedown', initResizeBottom, false);
     }
   },[ backgroundRef ]);
 
 
   return (
     <div
-      className={`background background-color-${(exporting && (backgroundColor === "transparent")) ? '' : backgroundColor}`}
+      className={`background background-color-${((exporting || exportingGIF) && (backgroundColor === "transparent")) ? '' : backgroundColor}`}
       ref={backgroundRef}
       style={{ padding: padding+'px' }}>
       <div className="resize-handle-left" ref={handleLeftRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
       <div className="resize-handle-right" ref={handleRightRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
-      <div className="resize-handle-bottom" ref={handleBottomRef} style={{ display: !(exporting || exportingGIF) ? 'block' : 'none' }} />
       <Window
         padding={padding}
         colors={colors}

@@ -1,15 +1,19 @@
 import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
-
 import LANGUAGE from './modes.js';
-import COLORS from "./colors.js";
-
 import './index.css';
-export default function Window({ colors, language, exporting, padding,
-                                 editorState, setEditorState, exportingGIF }) {
+
+function convertToSlug(Text) {
+  return Text.toLowerCase()
+             .replace(/ /g, '-')
+             .replace(/[^\w-]+/g, '');
+}
+
+export default function Window({ colors, language, padding,
+                                 editorState, setEditorState }) {
   return (
     <div className="window" style={{ borderRadius: padding === '0' ? '0' : '6px' }}>
-      <link href={`/themes/theme-${COLORS.indexOf(colors)+1}.css`} rel="stylesheet" />
+      <link href={`/themes/${convertToSlug(colors)}.css`} rel="stylesheet" />
       <div className="title-bar">
         <div className="title-buttons">
           <div className="title-button" />

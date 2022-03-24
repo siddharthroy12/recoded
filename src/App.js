@@ -1,7 +1,9 @@
+// This needs refactoring
 import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Background from './components/Background';
 import Footer from './components/Footer';
+import ForkButton from './components/ForkButton';
 import domtoimage from 'dom-to-image-more';
 import { createGIF } from 'gifshot';
 import COLORS from './components/Background/Window/colors';
@@ -27,7 +29,6 @@ function App() {
   const [language, setLanguage] = useState('JavaScript');
   const [backgroundColor, setBackgroundColor] = useState(2);
   const [exporting, setExporting] = useState(false);
-  const [recording, setRecording] = useState(false);
   const [exportingGIF, setExportingGIF] = useState(false);
   const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
   const [frames, setFrames] = useState([]);
@@ -35,12 +36,6 @@ function App() {
   const [editorState, setEditorState] = useState('// Type your code here');
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
   const [singleFrameProcessing, setSingleFrameProcessing] = useState(false);
-
-  useEffect(() => {
-    if (recording) {
-      setFrames(prev => [...prev, editorState ]);
-    }
-  }, [recording, editorState]);
 
   useEffect(() => {
     if (exportingGIF && !singleFrameProcessing) {
@@ -77,7 +72,7 @@ function App() {
       const width = backgroundRef.current.offsetWidth * SCALE;
       const height = backgroundRef.current.offsetHeight * SCALE;
       const framesToExport = [...gifFrames];
-      for (let _ of [1,2,3,4,5,6,7,8]) {
+      for (let i = 0; i < 9; i++) {
         framesToExport.push(gifFrames[gifFrames.length-1]);
       }
       createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
@@ -128,18 +123,31 @@ function App() {
   }
 
   const onRecord = () => {
-    if (recording) {
-      setRecording(false);
-      setExportingGIF(true);
-      return;
+    const totalLines = editorState.split('').filter(letter => letter === '\n').length;
+    let linesLeft = totalLines;
+    let tempFrames = [];
+
+    for (let i = 0; i < editorState.length; i++) {
+      if (editorState[i] === '\n') {
+        linesLeft--;
+      }
+
+      let currentFrame = editorState.slice(0, i+1);
+      for (let j = 0; j < linesLeft; j++) {
+        currentFrame += '\n';
+      }
+
+      tempFrames.push(currentFrame);
     }
 
-    setFrames([ editorState ]);
-    setRecording(true);
+
+    setFrames(tempFrames);
+    setExportingGIF(true);
   }
 
   return (
     <>
+      <ForkButton />
       <Header
         padding={padding} setPadding={setPadding}
         colors={colors} setColors={setColors}
@@ -147,7 +155,6 @@ function App() {
         backgroundColor={backgroundColor} setBackgroundColor={setBackgroundColor}
         exportingGIF={exportingGIF}
         allGIFFramesCaptured={allGIFFramesCaptured}
-        recording={recording}
         onExport={onExport}
         onRecord={onRecord}
       />

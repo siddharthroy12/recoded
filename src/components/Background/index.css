@@ -1,6 +1,6 @@
 .background {
   width: 400px;
-  height: 200px;
+  height: auto;
   position: relative;
   box-sizing: border-box;
   z-index:2;

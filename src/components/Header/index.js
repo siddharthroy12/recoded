@@ -9,8 +9,8 @@ import COLORS from '../Background/Window/colors';
 export default function Header({ padding, setPadding, colors, setColors,
                                  language, setLanguage, backgroundColor,
                                  setBackgroundColor, onExport, onRecord,
-                                 exportingGIF, allGIFFramesCaptured, recording }) {
-  const recordButtonText = (exportingGIF || allGIFFramesCaptured) ? 'Saving' : recording ? 'Stop' : 'Record';
+                                 exportingGIF, allGIFFramesCaptured }) {
+  const recordButtonText = (exportingGIF || allGIFFramesCaptured) ? 'Saving' : 'Export GIF';
   return (
     <div className="header-container">
     <header className="header">
@@ -20,7 +20,7 @@ export default function Header({ padding, setPadding, colors, setColors,
         <SelectInput name="Language" value={language} onChange={setLanguage} options={Object.keys(LANGUAGE)} />
         <BackgroundColorInput value={backgroundColor} onChange={setBackgroundColor} />
         <Button type="export" onClick={onExport}>
-          Export
+          Export PNG
         </Button>
         <Button type="record" onClick={onRecord} disabled={exportingGIF || allGIFFramesCaptured}>
           { recordButtonText }

@@ -68,7 +68,6 @@ To get a local copy up and running follow these simple steps.
 ## Roadmap
 
 - [ ] Add more themes
-- [ ] Add cancle record button
 - [ ] Make session shareable
 
 <p align="right">(<a href="#top">back to top</a>)</p>

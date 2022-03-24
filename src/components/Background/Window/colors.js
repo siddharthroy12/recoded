@@ -1,7 +1,7 @@
 const COLORS = [
   'VS Code Dark',
-  'Duotone Sea',
   'VS Code Light',
+  'Duotone Sea',
   'Atom Dark',
   "Synthwave '84",
 ]
