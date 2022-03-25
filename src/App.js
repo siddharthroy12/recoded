@@ -75,7 +75,12 @@ function App() {
       for (let i = 0; i < 9; i++) {
         framesToExport.push(gifFrames[gifFrames.length-1]);
       }
-      createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
+      createGIF({
+        images: framesToExport,
+        gifWidth: width,
+        gifHeight: height,
+        numWorkers: 5
+      }, (obj) => {
         if (!obj.error) {
           downloadBlob(obj.image, 'recoded.gif');
         }
