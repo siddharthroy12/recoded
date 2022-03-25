@@ -49,11 +49,11 @@ To get a local copy up and running follow these simple steps.
 
 * Clone this repo (have git installed)
   ```sh
-  git clone https://github.com/siddharthroy12/recoder.git
+  git clone https://github.com/siddharthroy12/recoded.git
   ```
 * Install dependencies (have nodejs installed)
   ```sh
-  cd recoder
+  cd recoded
   npm install # or yarn install
   ```
 * Run
