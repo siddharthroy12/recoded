@@ -14,7 +14,9 @@ export default forwardRef(( props, ref ) => {
     exporting,
     exportingGIF,
     editorState,
-    setEditorState
+    setEditorState,
+    filename,
+    setFilename
   } = props;
 
   const backgroundRef = ref;
@@ -96,6 +98,8 @@ export default forwardRef(( props, ref ) => {
         exportingGIF={exportingGIF}
         editorState={editorState}
         setEditorState={setEditorState}
+        filename={filename}
+        setFilename={setFilename}
       />
     </div>
   );

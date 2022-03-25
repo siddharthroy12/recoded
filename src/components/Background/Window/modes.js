@@ -20,7 +20,7 @@ require('prismjs/components/prism-jsx');
 require('prismjs/components/prism-tsx');
 require('prismjs/components/prism-php');
 
-const LANGUAGE = {
+export const LANGUAGE = {
   'C': 'c',
   'C++': 'cpp',
   'Java': 'java',
@@ -41,5 +41,27 @@ const LANGUAGE = {
   'TypeScript': 'typescript',
   'TSX': 'tsx',
 };
+
+export const EXTENTION = {
+  c: 'c',
+  cpp: 'cpp',
+  java: 'java',
+  bash: 'sh',
+  plaintext: '',
+  python: 'py',
+  csharp: 'cs',
+  dart: 'dart',
+  rust: 'rs',
+  json: 'json',
+  html: 'html',
+  css: 'css',
+  javascript: 'js',
+  jsx: 'jsx',
+  lua: 'lua',
+  php: 'php',
+  julia: 'jl',
+  typescript: 'ts',
+  tsx: 'tsx'
+}
 
 export default LANGUAGE;

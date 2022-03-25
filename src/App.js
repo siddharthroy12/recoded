@@ -7,19 +7,10 @@ import ForkButton from './components/ForkButton';
 import domtoimage from 'dom-to-image-more';
 import { createGIF } from 'gifshot';
 import COLORS from './components/Background/Window/colors';
+import downloadBlob from './lib/downloadBlob';
 import './App.css';
 
 const SCALE = 1.9;
-
-const downloadBlob = (blob, filename) => {
-  let element = document.createElement('a');
-  element.setAttribute('href', blob);
-  element.setAttribute('download', filename);
-  element.style.display = 'none';
-  document.body.appendChild(element);
-  element.click();
-  document.body.removeChild(element);
-}
 
 function App() {
   // TODO: Refactor this to use context API
@@ -31,6 +22,7 @@ function App() {
   const [exporting, setExporting] = useState(false);
   const [exportingGIF, setExportingGIF] = useState(false);
   const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
+  const [filename, setFilename] = useState('App.js');
   const [frames, setFrames] = useState([]);
   const [gifFrames, setGIFFrames] = useState([]);
   const [editorState, setEditorState] = useState('// Type your code here');
@@ -77,7 +69,7 @@ function App() {
       }
       createGIF({ images: framesToExport, gifWidth: width, gifHeight: height, sampleInterval: 1 }, (obj) => {
         if (!obj.error) {
-          downloadBlob(obj.image, 'recoded.gif');
+          downloadBlob(obj.image, `${filename}.gif`);
         }
         setAllGIFFramesCaptured(false);
         setGIFFrames([]);
@@ -113,7 +105,7 @@ function App() {
     setTimeout(() => {
       takeSnapshot()
         .then(blobUrl => {
-          downloadBlob(blobUrl, 'recoded.png');
+          downloadBlob(blobUrl, `${filename}.png`);
         })
         .catch(error => {
           console.log("Error: "+error);
@@ -167,6 +159,7 @@ function App() {
         language={language}
         exporting={exporting}
         exportingGIF={exportingGIF || allGIFFramesCaptured}
+        filename={filename} setFilename={setFilename}
         editorState={editorState}
         setEditorState={setEditorState}
       />
