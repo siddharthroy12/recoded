@@ -9,7 +9,8 @@ import COLORS from '../Background/Window/colors';
 export default function Header({ padding, setPadding, colors, setColors,
                                  language, setLanguage, backgroundColor,
                                  setBackgroundColor, onExport, onRecord,
-                                 exportingGIF, allGIFFramesCaptured }) {
+                                 exportingGIF, allGIFFramesCaptured, frameDuration,
+                                 setFrameDuration }) {
   const recordButtonText = (exportingGIF || allGIFFramesCaptured) ? 'Saving' : 'Export GIF';
   return (
     <div className="header-container">
@@ -17,14 +18,17 @@ export default function Header({ padding, setPadding, colors, setColors,
       <div className="header__part">
         <SelectInput name="Colors" value={colors} onChange={setColors} options={COLORS} />
         <NumberInput name="Padding" value={padding} onChange={setPadding} />
+        <NumberInput name="Frame Duration" value={frameDuration} onChange={setFrameDuration} />
         <SelectInput name="Language" value={language} onChange={setLanguage} options={Object.keys(LANGUAGE)} />
         <BackgroundColorInput value={backgroundColor} onChange={setBackgroundColor} />
-        <Button type="export" onClick={onExport}>
-          Export PNG
-        </Button>
-        <Button type="record" onClick={onRecord} disabled={exportingGIF || allGIFFramesCaptured}>
-          { recordButtonText }
-        </Button>
+        <div className="buttons">
+          <Button type="export" onClick={onExport}>
+            Export PNG
+          </Button>
+          <Button type="record" onClick={onRecord} disabled={exportingGIF || allGIFFramesCaptured}>
+            { recordButtonText }
+          </Button>
+        </div>
       </div>
     </header>
     </div>

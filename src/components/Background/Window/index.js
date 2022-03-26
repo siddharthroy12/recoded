@@ -20,7 +20,7 @@ export default function Window({ colors, language, padding,
         return prev
       }
     });
-  }, [language]);
+  }, [language, setFilename]);
 
   // For basic code formatting
   // This algorithm is not perfect but will be enough for those who were complaining
@@ -47,10 +47,19 @@ export default function Window({ colors, language, padding,
           }
         }
 
+        console.log({ secondLastCharacter });
+        console.log({ lastCharacter });
+
         if (['{', '[', '(', ':'].includes(secondLastCharacter) && lastCharacter === '\n' && code[lastCharacterIndex - 1] !== ' ') {
           return code + ' '.repeat(TABSIZE);
         } else if (['}', ']', ')'].includes(lastCharacter)) {
-          if (code[lastCharacterIndex-1] === ' ') {
+          for (let i = code.length - 2; i >= 0; i--) {
+             if (code[i] !== ' ') {
+               secondLastCharacter = code[i];
+               break;
+             }
+          }
+          if (code[lastCharacterIndex-1] === ' ' && secondLastCharacter === '\n') {
             let codeSplit = code.split('');
             codeSplit.splice(code.length - (1 + TABSIZE), TABSIZE);
 

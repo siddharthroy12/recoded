@@ -1,45 +1,14 @@
 .fork-button {
-  position: fixed;
-  right: 20px;
-  bottom: 25px;
   background-color: var(--header-background);
   border: var(--header-border);
-  border-radius: 50px;
-  width: 40px;
-  height: 40px;
-  display: grid;
-  place-items: center;
+  border-radius: 5px;
   color: #d1d1d1;
   cursor: pointer;
+  display: flex;
+  font-size: 15px;
+  align-items: center;
+  text-decoration: none;
+  padding: 2px 10px;
+  padding-right: 15px;
 }
 
-.fork-button:hover .fork-button__tool-tip {
-  opacity: 100%;
-}
-
-.fork-button__tool-tip {
-  opacity: 0;
-  transition-duration: 200ms;
-  pointer-events: none;
-  position: absolute;
-  left: -106px;
-  bottom: 0;
-  background: var(--header-background);
-  padding: 10px 15px;
-  border: var(--header-border);
-  font-size: 14px;
-  border-radius: 4px;
-}
-
-.fork-button__tool-tip__arrow {
-  width: 10px;
-  height: 10px;
-  position: absolute;
-  background: var(--header-background);
-  border: var(--header-border);
-  right: -6px;
-  border-bottom: none;
-  border-left: none;
-  transform: translateY(50%) rotate(45deg);
-  bottom: 50%;
-}

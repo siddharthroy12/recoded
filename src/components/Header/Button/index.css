@@ -9,6 +9,11 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
+  margin-top: 25px;
+}
+
+.button:nth-child(1) {
+  margin-left: 0;
 }
 
 .button.record {
