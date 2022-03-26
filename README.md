@@ -9,7 +9,7 @@
   <h3 align="center">Recoded</h3>
 
   <p align="center">
-    An awesome tool make Images and GIFs of your code!
+    An awesome tool to make Images and GIFs of your code!
     <br />
     <br />
     <a href="https://recoded.netlify.app/">View Demo</a>
