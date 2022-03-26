@@ -3,7 +3,6 @@ import { useState, useRef, useEffect } from 'react';
 import Header from './components/Header';
 import Background from './components/Background';
 import Footer from './components/Footer';
-import ForkButton from './components/ForkButton';
 import domtoimage from 'dom-to-image-more';
 import { createGIF } from 'gifshot';
 import COLORS from './components/Background/Window/colors';
@@ -24,6 +23,7 @@ function App() {
   const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
   const [filename, setFilename] = useState('App.js');
   const [frames, setFrames] = useState([]);
+  const [frameDuration, setFrameDuration] = useState(1);
   const [gifFrames, setGIFFrames] = useState([]);
   const [editorState, setEditorState] = useState('// Type your code here');
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
@@ -71,7 +71,9 @@ function App() {
         images: framesToExport,
         gifWidth: width,
         gifHeight: height,
-        numWorkers: 5
+        numWorkers: 5,
+        frameDuration,
+        sampleInterval: 7
       }, (obj) => {
         if (!obj.error) {
           downloadBlob(obj.image, `${filename}.gif`);
@@ -81,7 +83,7 @@ function App() {
         setFrames([]);
       });
     }
-  }, [allGIFFramesCaptured, gifFrames, frames]);
+  }, [allGIFFramesCaptured, gifFrames, frames, filename, frameDuration]);
 
   const takeSnapshot = async () => {
     const node = backgroundRef.current;
@@ -144,7 +146,6 @@ function App() {
 
   return (
     <>
-      <ForkButton />
       <Header
         padding={padding} setPadding={setPadding}
         colors={colors} setColors={setColors}
@@ -152,6 +153,7 @@ function App() {
         backgroundColor={backgroundColor} setBackgroundColor={setBackgroundColor}
         exportingGIF={exportingGIF}
         allGIFFramesCaptured={allGIFFramesCaptured}
+        frameDuration={frameDuration} setFrameDuration={setFrameDuration}
         onExport={onExport}
         onRecord={onRecord}
       />

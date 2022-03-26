@@ -6,6 +6,7 @@ footer {
   color: var(--footer-text);
   font-size: 0.8em;
   position: fixed;
+  flex-wrap: wrap;
   bottom: 0;
   left: 50%;
   transform: translateX(-50%);
@@ -20,7 +21,8 @@ footer {
 .footer-section {
   display: flex;
   align-items: center;
-  margin: 0 30px;
+  margin: 0 20px;
+  height: 30px;
 }
 
 .footer-section p {
