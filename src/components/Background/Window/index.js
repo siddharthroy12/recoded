@@ -46,10 +46,6 @@ export default function Window({ colors, language, padding,
             break;
           }
         }
-
-        console.log({ secondLastCharacter });
-        console.log({ lastCharacter });
-
         if (['{', '[', '(', ':'].includes(secondLastCharacter) && lastCharacter === '\n' && code[lastCharacterIndex - 1] !== ' ') {
           return code + ' '.repeat(TABSIZE);
         } else if (['}', ']', ')'].includes(lastCharacter)) {

@@ -9,7 +9,7 @@ import COLORS from './components/Background/Window/colors';
 import downloadBlob from './lib/downloadBlob';
 import './App.css';
 
-const SCALE = 1.9;
+const SCALE = 2;
 
 function App() {
   // TODO: Refactor this to use context API
@@ -61,27 +61,11 @@ function App() {
 
   useEffect(() => {
     if (allGIFFramesCaptured && (gifFrames.length === frames.length)) {
-      const width = backgroundRef.current.offsetWidth * SCALE;
-      const height = backgroundRef.current.offsetHeight * SCALE;
       const framesToExport = [...gifFrames];
       for (let i = 0; i < 9; i++) {
         framesToExport.push(gifFrames[gifFrames.length-1]);
       }
-      createGIF({
-        images: framesToExport,
-        gifWidth: width,
-        gifHeight: height,
-        numWorkers: 5,
-        frameDuration,
-        sampleInterval: 7
-      }, (obj) => {
-        if (!obj.error) {
-          downloadBlob(obj.image, `${filename}.gif`);
-        }
-        setAllGIFFramesCaptured(false);
-        setGIFFrames([]);
-        setFrames([]);
-      });
+      makeVideo(framesToExport, 100);
     }
   }, [allGIFFramesCaptured, gifFrames, frames, filename, frameDuration]);
 
@@ -144,6 +128,70 @@ function App() {
     setExportingGIF(true);
   }
 
+  const makeVideo = (frames, speed) => {
+    const width = backgroundRef.current.offsetWidth * SCALE;
+    const height = backgroundRef.current.offsetHeight * SCALE;
+    const canvas = document.createElement('canvas');
+    canvas.width = width;
+    canvas.height = height;
+    const ctx = canvas.getContext("2d");
+    const images = []
+
+    frames.forEach(frame => {
+      const img = new Image();
+      img.src = frame;
+      images.push(img);
+    })
+
+    let currentFrame = 0;
+
+    function draw() {
+      ctx.drawImage(images[currentFrame], 0, 0, width, height);
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    const interval = setInterval(() => {
+      currentFrame += 1;
+      if (currentFrame == frames.length-1) {
+        mediaRecorder.stop();
+      }
+    }, speed);
+
+    const videoStream = canvas.captureStream(30);
+    const mediaRecorder = new MediaRecorder(videoStream);
+
+    let chunks = [];
+
+    mediaRecorder.ondataavailable = function(e) {
+      chunks.push(e.data);
+    };
+
+    mediaRecorder.onstop = function(e) {
+      clearInterval(interval);
+      const blob = new Blob(chunks, { 'type' : 'video/mp4' });
+      chunks = [];
+      const element = document.createElement('a');
+      element.setAttribute('href', URL.createObjectURL(blob));
+      element.setAttribute('download', "test");
+
+      element.style.display = 'none';
+      document.body.appendChild(element);
+      element.click();
+      document.body.removeChild(element);
+
+      setAllGIFFramesCaptured(false);
+      setGIFFrames([]);
+      setFrames([]);
+
+    };
+    mediaRecorder.ondataavailable = function(e) {
+      chunks.push(e.data);
+    };
+
+    mediaRecorder.start();
+  }
+
   return (
     <>
       <Header
@@ -158,18 +206,18 @@ function App() {
         onRecord={onRecord}
       />
       <div className="center">
-      <Background
-        ref={backgroundRef}
-        backgroundColor={backgroundColor}
-        padding={padding}
-        colors={colors}
-        language={language}
-        exporting={exporting}
-        exportingGIF={exportingGIF || allGIFFramesCaptured}
-        filename={filename} setFilename={setFilename}
-        editorState={editorState}
-        setEditorState={setEditorState}
-      />
+        <Background
+          ref={backgroundRef}
+          backgroundColor={backgroundColor}
+          padding={padding}
+          colors={colors}
+          language={language}
+          exporting={exporting}
+          exportingGIF={exportingGIF || allGIFFramesCaptured}
+          filename={filename} setFilename={setFilename}
+          editorState={editorState}
+          setEditorState={setEditorState}
+        />
       </div>
       <Footer />
     </>
