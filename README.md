@@ -9,7 +9,7 @@
   <h3 align="center">Recoded</h3>
 
   <p align="center">
-    An awesome tool make Images and GIFs of your code!
+    An awesome tool make Images and Videos of your code online!
     <br />
     <br />
     <a href="https://recoded.netlify.app/">View Demo</a>
@@ -26,7 +26,7 @@
 
 ![[Project Preview]](./preview.gif)
 
-There are plenty of Apps like this where you can make beautiful images of your code but non of them support making GIFs so I made this.
+There are plenty of Apps like this where you can make beautiful images of your code but non of them support making Videos so I made this.
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 

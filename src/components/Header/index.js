@@ -11,7 +11,7 @@ export default function Header({ padding, setPadding, colors, setColors,
                                  setBackgroundColor, onExport, onRecord,
                                  exportingGIF, allGIFFramesCaptured, frameDuration,
                                  setFrameDuration }) {
-  const recordButtonText = (exportingGIF || allGIFFramesCaptured) ? 'Saving' : 'Export GIF';
+  const recordButtonText = (exportingGIF || allGIFFramesCaptured) ? 'Saving' : 'Export VID';
   return (
     <div className="header-container">
     <header className="header">
