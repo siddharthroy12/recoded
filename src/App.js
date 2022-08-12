@@ -4,7 +4,6 @@ import Header from './components/Header';
 import Background from './components/Background';
 import Footer from './components/Footer';
 import domtoimage from 'dom-to-image-more';
-import { createGIF } from 'gifshot';
 import COLORS from './components/Background/Window/colors';
 import downloadBlob from './lib/downloadBlob';
 import './App.css';
@@ -23,7 +22,7 @@ function App() {
   const [currentFrameToCapture, setCurrentFrameToCapture] = useState(0);
   const [filename, setFilename] = useState('App.js');
   const [frames, setFrames] = useState([]);
-  const [frameDuration, setFrameDuration] = useState(1);
+  const [frameDuration, setFrameDuration] = useState(100);
   const [gifFrames, setGIFFrames] = useState([]);
   const [editorState, setEditorState] = useState('// Type your code here');
   const [allGIFFramesCaptured, setAllGIFFramesCaptured] = useState(false);
@@ -65,7 +64,7 @@ function App() {
       for (let i = 0; i < 9; i++) {
         framesToExport.push(gifFrames[gifFrames.length-1]);
       }
-      makeVideo(framesToExport, 100);
+      makeVideo(framesToExport, frameDuration);
     }
   }, [allGIFFramesCaptured, gifFrames, frames, filename, frameDuration]);
 
@@ -153,8 +152,11 @@ function App() {
 
     const interval = setInterval(() => {
       currentFrame += 1;
-      if (currentFrame == frames.length-1) {
-        mediaRecorder.stop();
+      if (currentFrame === frames.length-1) {
+        clearInterval(interval);
+        setTimeout(() => {
+          mediaRecorder.stop();
+        }, 1000);
       }
     }, speed);
 
@@ -173,7 +175,7 @@ function App() {
       chunks = [];
       const element = document.createElement('a');
       element.setAttribute('href', URL.createObjectURL(blob));
-      element.setAttribute('download', "test");
+      element.setAttribute('download', `${filename}.mp4`);
 
       element.style.display = 'none';
       document.body.appendChild(element);
@@ -183,7 +185,6 @@ function App() {
       setAllGIFFramesCaptured(false);
       setGIFFrames([]);
       setFrames([]);
-
     };
     mediaRecorder.ondataavailable = function(e) {
       chunks.push(e.data);
