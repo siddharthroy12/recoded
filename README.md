@@ -36,7 +36,6 @@ There are plenty of Apps like this where you can make beautiful images of your c
 
 * [React.js](https://reactjs.org/)
 * [DOM to Image](https://github.com/tsayen/dom-to-image)
-* [GIFshot](https://yahoo.github.io/gifshot/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
