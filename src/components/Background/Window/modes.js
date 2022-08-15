@@ -15,6 +15,7 @@ import 'prismjs/components/prism-markup';
 import 'prismjs/components/prism-csharp';
 import 'prismjs/components/prism-typescript';
 import 'prismjs/components/prism-markup-templating';
+import 'prismjs/components/prism-ruby';
 require('prismjs/components/prism-java');
 require('prismjs/components/prism-jsx');
 require('prismjs/components/prism-tsx');
@@ -30,6 +31,7 @@ export const LANGUAGE = {
   'C#': 'csharp',
   'Dart': 'dart',
   'Rust': 'rust',
+  'Ruby': 'ruby',
   'JSON': 'json',
   'HTML': 'html',
   'CSS': 'css',
@@ -52,6 +54,7 @@ export const EXTENTION = {
   csharp: 'cs',
   dart: 'dart',
   rust: 'rs',
+  ruby: 'rb',
   json: 'json',
   html: 'html',
   css: 'css',
