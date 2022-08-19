@@ -24,15 +24,19 @@
   border-top-right-radius: 5px;
   display: flex;
   align-items: center;
-  justify-content: center;
+  max-width: calc(100% - 120px);
 }
 
 .title-text span {
   outline: none;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
 }
 
 .title-text img {
   width: 20px;
+  height: 20px;
   margin-right: 10px;
 }
 
