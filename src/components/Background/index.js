@@ -11,6 +11,8 @@ export default forwardRef(( props, ref ) => {
     padding,
     colors,
     language,
+    font,
+    setFont,
     exporting,
     exportingGIF,
     editorState,
@@ -94,6 +96,8 @@ export default forwardRef(( props, ref ) => {
         padding={padding}
         colors={colors}
         language={language}
+        font={font}
+        setFont={setFont}
         exporting={exporting}
         exportingGIF={exportingGIF}
         editorState={editorState}
