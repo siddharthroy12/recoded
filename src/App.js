@@ -16,6 +16,7 @@ function App() {
   const [padding, setPadding] = useState(42);
   const [colors, setColors] = useState(COLORS[0]);
   const [language, setLanguage] = useState('JavaScript');
+  const [font, setFont] = useState('Mononoki');
   const [backgroundColor, setBackgroundColor] = useState(2);
   const [exporting, setExporting] = useState(false);
   const [exportingGIF, setExportingGIF] = useState(false);
@@ -199,6 +200,7 @@ function App() {
         padding={padding} setPadding={setPadding}
         colors={colors} setColors={setColors}
         language={language} setLanguage={setLanguage}
+        font={font} setFont={setFont}
         backgroundColor={backgroundColor} setBackgroundColor={setBackgroundColor}
         exportingGIF={exportingGIF}
         allGIFFramesCaptured={allGIFFramesCaptured}
@@ -213,6 +215,7 @@ function App() {
           padding={padding}
           colors={colors}
           language={language}
+          font={font} setFont={setFont}
           exporting={exporting}
           exportingGIF={exportingGIF || allGIFFramesCaptured}
           filename={filename} setFilename={setFilename}

@@ -3,12 +3,13 @@ import Editor from 'react-simple-code-editor';
 import { highlight, languages } from 'prismjs/components/prism-core';
 import convertToSlug from '../../../lib/convertToSlug';
 import { LANGUAGE, EXTENTION } from './modes.js';
+import { FONTS } from './fonts.js';
 import './index.css';
 
 const TABSIZE = 2;
 
-export default function Window({ colors, language, padding,
-                                 editorState, setEditorState, filename, setFilename }) {
+export default function Window({ colors, language, font, setFont,
+                                 padding, editorState, setEditorState, filename, setFilename }) {
 
   // Rename file extention if the language is not plaintext
   useEffect(() => {
@@ -21,6 +22,25 @@ export default function Window({ colors, language, padding,
       }
     });
   }, [language, setFilename]);
+
+  // Set editor font
+  useEffect(() => {
+    setFont(prev => {
+      const font = Object.values(FONTS.find(f => {
+        return prev === Object.keys(f)[0]
+      }))[0]
+
+      if (!document.getElementById(font.fontFamily)) {
+        const link = document.createElement('link')
+        link.rel = 'stylesheet'
+        link.id = font.fontFamily
+        document.head.appendChild(link)
+        link.href = font.url
+      }
+
+      return prev
+    });
+  }, [font, setFont]);
 
   // For basic code formatting
   // This algorithm is not perfect but will be enough for those who were complaining
@@ -93,7 +113,7 @@ export default function Window({ colors, language, padding,
         padding={10}
         tabSize={TABSIZE}
         style={{
-          fontFamily: '"Mononoki", "Fira Mono", monospace',
+          fontFamily: `"${Object.values(FONTS.find(f => Object.keys(f)[0] === font))[0].fontFamily}", monospace`,
           fontSize: 15,
           outline: 'none',
           lineHeight: '21px'
