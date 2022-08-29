@@ -6,6 +6,7 @@ import 'prismjs/components/prism-python';
 import 'prismjs/components/prism-dart';
 import 'prismjs/components/prism-rust';
 import 'prismjs/components/prism-json';
+import 'prismjs/components/prism-kotlin';
 import 'prismjs/components/prism-lua';
 import 'prismjs/components/prism-julia';
 import 'prismjs/components/prism-c';
@@ -37,6 +38,7 @@ export const LANGUAGE = {
   'CSS': 'css',
   'JavaScript': 'javascript',
   'JSX': 'jsx',
+  'Kotlin': 'kotlin',
   'Lua': 'lua',
   'PHP': 'php',
   'Julia': 'julia',
@@ -60,6 +62,7 @@ export const EXTENTION = {
   css: 'css',
   javascript: 'js',
   jsx: 'jsx',
+  kotlin: 'kt',
   lua: 'lua',
   php: 'php',
   julia: 'jl',
