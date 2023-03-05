@@ -1,52 +1,53 @@
 export const FONTS = [
   { 'Mononoki': {
       fontFamily: 'mononoki',
-      url: '//cdn.jsdelivr.net/npm/@xz/fonts@1/serve/mononoki.min.css'
+      url: 'https://cdn.jsdelivr.net/npm/@xz/fonts@1/serve/mononoki.min.css'
     }
   },
   { 'Fira Code': {
-      fontFamily: 'fira code',
-      url: '//cdn.jsdelivr.net/npm/firacode/distr/fira_code.css'
+      fontFamily: 'Fira Code',
+      url: 'https://cdn.jsdelivr.net/npm/firacode/distr/fira_code.css'
     }
   },
-  { 'Monoid': {
-      fontFamily: 'monoid',
-      url: '//fonts.cdnfonts.com/css/monoid'
-    }
-  },
+  // TODO: Find alernative cdn that doesn't have cloudflare protection
+  // { 'Monoid': {
+  //     fontFamily: 'monoid',
+  //     url: 'https://fonts.cdnfonts.com/css/monoid',
+  //   }
+  // },
   { 'Hack': {
-      fontFamily: 'hack',
-      url: '//cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css'
+      fontFamily: 'Hack',
+      url: 'https://cdn.jsdelivr.net/npm/hack-font@3/build/web/hack.css'
     }
   },
   { 'Ubuntu Mono': {
-      fontFamily: 'ubuntu mono',
-      url: '//fonts.cdnfonts.com/css/ubuntu-mono'
+      fontFamily: 'Ubuntu Mono',
+      url: 'https://fonts.googleapis.com/css2?family=Ubuntu+Mono&display=swap'
     }
   },
   { 'Cascadia Code': {
-      fontFamily: 'cascadia code',
-      url: '//fonts.cdnfonts.com/css/cascadia-code'
+      fontFamily: 'Cascadia Code',
+      url: 'https://cdn.jsdelivr.net/npm/@fontsource/cascadia-code@4.2.1/index.min.css'
     }
   },
   { 'JetBrains Mono': {
       fontFamily: 'jetbrains mono',
-      url: '//cdn.jsdelivr.net/npm/jetbrains-mono/css/jetbrains-mono.min.css'
+      url: 'https://cdn.jsdelivr.net/npm/jetbrains-mono/css/jetbrains-mono.min.css'
     }
   },
   { 'Victor Mono': {
       fontFamily: 'victor mono',
-      url: '//cdn.jsdelivr.net/npm/victormono/dist/index.min.css'
+      url: 'https://cdn.jsdelivr.net/npm/victormono/dist/index.min.css'
     }
   },
   { 'Anonymous Pro': {
       fontFamily: 'anonymous pro',
-      url: '//fonts.cdnfonts.com/css/anonymous-pro'
+      url: 'https://fonts.googleapis.com/css2?family=Anonymous+Pro&display=swap'
     }
   },
   { 'Source Code Pro': {
       fontFamily: 'source code pro',
-      url: '//cdn.jsdelivr.net/npm/source-code-pro/source-code-pro.css'
+      url: 'https://cdn.jsdelivr.net/npm/source-code-pro/source-code-pro.css'
     }
   },
 ];

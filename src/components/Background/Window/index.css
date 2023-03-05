@@ -30,7 +30,6 @@
 .title-text span {
   outline: none;
   white-space: nowrap;
-  text-overflow: ellipsis;
   overflow: hidden;
 }
 
