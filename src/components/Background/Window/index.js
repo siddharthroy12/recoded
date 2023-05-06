@@ -177,6 +177,7 @@ export default function Window({
       </div>
       <div className="editor_wrap">
         <Editor
+          data-testid="editor"
           value={editorState}
           onValueChange={onEditorChange}
           highlight={(code) => highlight(code, languages[LANGUAGE[language]])}
