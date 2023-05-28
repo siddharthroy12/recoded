@@ -3,7 +3,7 @@
 <br />
 <div align="center">
   <a href="https://recoded.netlify.app/">
-    <img src="public/app_logo.svg" alt="Logo" width="80" height="80">
+    <img src="https://github.com/siddharthroy12/recoded/raw/main/public/app_logo.svg" alt="Logo" width="80" height="80">
   </a>
 
   <h3 align="center">Recoded</h3>
@@ -24,7 +24,7 @@
 <!-- ABOUT THE PROJECT -->
 ## About The Project
 
-![[Project Preview]](./preview.gif)
+![[Project Preview]](https://github.com/siddharthroy12/recoded/raw/main/preview.gif)
 
 There are plenty of Apps like this where you can make beautiful images of your code but non of them support making Videos so I made this.
 
