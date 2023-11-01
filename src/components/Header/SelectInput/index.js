@@ -3,7 +3,7 @@ import useClickOutside from '../../../lib/useClickOutside';
 import ArrowDownIcon from '../ArrowDownIcon';
 import './index.css';
 
-export default function SelectInput({ name, value, onChange, options }) {
+export default function SelectInput({ name, value, onChange, options, testid }) {
   const [showOptions, setShowOptions] = useState(false);
   const elementRef = useRef(null);
 
@@ -22,6 +22,7 @@ export default function SelectInput({ name, value, onChange, options }) {
     <div className="select-input" ref={elementRef}>
       <label className="input-label">{name}</label>
       <div
+        data-testid={testid}
         className="input-box"
         style={{
           width: '120px',
@@ -33,6 +34,7 @@ export default function SelectInput({ name, value, onChange, options }) {
         <ArrowDownIcon />
       </div>
       <div className="options"
+        data-testid="options-container"
         style={{
           opacity: !showOptions ? '0' : '100%',
           pointerEvents: !showOptions ? 'none' : 'auto'

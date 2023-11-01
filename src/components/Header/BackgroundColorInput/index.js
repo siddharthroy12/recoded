@@ -3,7 +3,7 @@ import useClickOutside from '../../../lib/useClickOutside';
 import ArrowDownIcon from '../ArrowDownIcon';
 import './index.css';
 
-export default function BackgroundColorInput({ value, onChange }) {
+export default function BackgroundColorInput({ value, onChange, testid }) {
   const [showOptions, setShowOptions] = useState(false);
   const elementRef = useRef(null);
 
@@ -22,6 +22,7 @@ export default function BackgroundColorInput({ value, onChange }) {
   <div className="select-input" ref={elementRef}>
       <label className="input-label">Background Color</label>
       <div
+        data-testid={testid}
         className="input-box"
         style={{
           width: '40px',
@@ -33,6 +34,7 @@ export default function BackgroundColorInput({ value, onChange }) {
         <ArrowDownIcon />
         </div>
         <div className="options"
+          data-testid="background-options-container"
           style={{
             width: '40px',
             opacity: !showOptions ? '0' : '100%',

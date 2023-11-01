@@ -18,11 +18,11 @@ export default function Header({ padding, setPadding, colors, setColors,
     <header className="header">
       <div className="header__part">
         <SelectInput name="Colors" value={colors} onChange={setColors} options={COLORS} />
-        <NumberInput name="Padding" value={padding} onChange={setPadding} />
+        <NumberInput name="Padding" value={padding} onChange={setPadding} testid="padding-input" />
         <NumberInput name="Frame Duration" value={frameDuration} onChange={setFrameDuration} />
-        <SelectInput name="Language" value={language} onChange={setLanguage} options={Object.keys(LANGUAGE)} />
-        <SelectInput name="Font" value={font} onChange={setFont} options={FONTS.map(f => Object.keys(f)[0])} />
-        <BackgroundColorInput value={backgroundColor} onChange={setBackgroundColor} />
+        <SelectInput name="Language" value={language} onChange={setLanguage} options={Object.keys(LANGUAGE)} testid="language-select" />
+        <SelectInput name="Font" value={font} onChange={setFont} options={FONTS.map(f => Object.keys(f)[0])} testid="font-select" />
+        <BackgroundColorInput value={backgroundColor} onChange={setBackgroundColor} testid="background-color-select" />
         <div className="buttons">
           <Button type="export" onClick={onExport}>
             Export PNG
