@@ -18,6 +18,7 @@ import "prismjs/components/prism-typescript";
 import "prismjs/components/prism-markup-templating";
 import "prismjs/components/prism-ruby";
 import "prismjs/components/prism-hcl";
+import "prismjs/components/prism-go";
 require("prismjs/components/prism-java");
 require("prismjs/components/prism-jsx");
 require("prismjs/components/prism-tsx");
@@ -46,6 +47,7 @@ export const LANGUAGE = {
   TypeScript: "typescript",
   TSX: "tsx",
   HCL: "hcl",
+  Go: "go",
 };
 
 export const EXTENTION = {
@@ -71,6 +73,7 @@ export const EXTENTION = {
   typescript: "ts",
   tsx: "tsx",
   hcl: "hcl",
+  go: "go",
 };
 
 export default LANGUAGE;
